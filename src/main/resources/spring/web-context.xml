@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <context:component-scan base-package="spatula.web.mvc" />
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" validator="validator"/>
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+    <!-- Turn off working out content type based on URL file extension, should fall back to looking at the Accept headers -->
+       <property name="favorPathExtension" value="false" />
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
+        p:validationMessageSource-ref="messageSource"/>
+
+    <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+        p:basenames="classpath:messages, classpath:errors" p:defaultEncoding="UTF-8"
+        p:fallbackToSystemLocale="false" />
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+    <property name="definitions">
+        <list>
+           <value>classpath:tiles/defs.xml</value>
+        </list>
+      </property>
+    </bean>
+
+    <bean id="tilesResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+        p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />
+
+   <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+         <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="10485760" />
+        <property name="maxInMemorySize" value="10485760" />
+        <!-- 10mb -->
+    </bean>
+    <mvc:default-servlet-handler/>
+
+</beans>
