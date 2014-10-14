@@ -11,7 +11,7 @@
 
     <typeAliases>
         <typeAlias type="org.springframework.security.core.authority.SimpleGrantedAuthority" alias="simpleGrantedAuthority"/>
-        <package   name="spatula.domain"/>
+        <package   name="spatula.entity"/>
     </typeAliases>
 
 </configuration>

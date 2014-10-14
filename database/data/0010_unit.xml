@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+    logicalFilePath="data/0010_unit.xml">
+
+    <changeSet id="10" author="Artiom Sharikov">
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">1</column>
+            <column name="name">м3</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">2</column>
+            <column name="name">чел-ч</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">3</column>
+            <column name="name">маш-ч</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">4</column>
+            <column name="name">Тенге</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">5</column>
+            <column name="name">м2</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">6</column>
+            <column name="name">кг</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">7</column>
+            <column name="name">шт</column>
+        </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">8</column>
+            <column name="name">т</column>
+        </insert>
+        <rollback>
+            <delete tableName="unit" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

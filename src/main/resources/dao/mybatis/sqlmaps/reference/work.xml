@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.reference.WorkDao">
+
+    <insert id="create" parameterType="work" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.work (code, name, unit_id)
+        VALUES
+            (#{code}, #{name}, #{unitId})
+    </insert>
+
+    <select id="read" parameterType="long" resultType="work">
+        SELECT
+            id,
+            code,
+            name,
+            unit_id
+        FROM
+            ${db.schema}.work
+        WHERE
+            id = #{key}
+    </select>
+
+    <update id="update" parameterType="work">
+        UPDATE
+            ${db.schema}.work
+        SET
+            code = #{code},
+            name = #{name},
+            unit_id = #{unitId}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+            ${db.schema}.work
+        WHERE
+            id = #{key}
+    </delete>
+
+    <select id="findAll" resultType="work">
+        SELECT
+            *
+        FROM
+            ${db.schema}.work
+    </select>
+
+</mapper>
