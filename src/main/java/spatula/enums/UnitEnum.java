@@ -9,7 +9,8 @@ public enum UnitEnum {
     M2(5L, "м2"),
     KG(6L, "кг"),
     PC(7L, "шт"),
-    T(8L, "т");
+    T(8L, "т;1т"),
+    M(9L, "м");
 
     private Long id;
     private String name;
@@ -21,8 +22,10 @@ public enum UnitEnum {
 
     public static UnitEnum getUnitEnumByName(String name) {
         for (UnitEnum unitEnum : UnitEnum.values()) {
-            if (unitEnum.getName().equals(name)) {
-                return unitEnum;
+            for (String separatedName : unitEnum.getName().split(";")) {
+                if (separatedName.equals(name)) {
+                    return unitEnum;
+                }
             }
         }
         return null;
