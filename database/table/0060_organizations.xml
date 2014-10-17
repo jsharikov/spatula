@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0060_organizations.xml">
+
+    <changeSet id="60" author="Anastasiya">
+        <createTable tableName="organizations" remarks="Организации" schemaName="${db.schema}">
+            <column name="id" type="bigint" remarks="Идентификатор организации">
+                <constraints primaryKey="true" primaryKeyName="pk_organizations" nullable="false"/>
+            </column>
+            <column name="org_form_id" type="bigint" remarks="Идентификатор орг.-правовой формы">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="varchar(128)" remarks="Наименование">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BIN" type="varchar(12)" remarks="БИН">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(128)" remarks="Адрес">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IIK" type="varchar(20)" remarks="ИИК">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_id" type="bigint" remarks="Идентификатор банка">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BIK" type="varchar(8)" remarks="БИК">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_organizations_org_form_id"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="organizations" baseColumnNames="org_form_id"
+            referencedTableName="org_forms" referencedColumnNames="id"
+            referencedTableSchemaName="${db.schema}" />
+
+        <addForeignKeyConstraint constraintName="fk_organizations_bank_id"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="organizations" baseColumnNames="bank_id"
+            referencedTableName="banks" referencedColumnNames="id"
+            referencedTableSchemaName="${db.schema}" />
+
+        <rollback>
+            <dropTable tableName="organizations" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

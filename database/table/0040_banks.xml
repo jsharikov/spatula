@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0040_banks.xml">
+
+    <changeSet id="40" author="Anastasiya">
+        <createTable tableName="banks" remarks="Банки" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор банка">
+                <constraints primaryKey="true" primaryKeyName="pk_bank" nullable="false"/>
+            </column>
+            <column name="name" type="text" remarks="Наименование">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="banks" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
