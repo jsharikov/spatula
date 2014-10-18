@@ -6,11 +6,11 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <include file="0010_unit.xml"                                           relativeToChangelogFile="true" />
     <include file="0030_standard_work.xml"                                  relativeToChangelogFile="true" />
-    <include file="0060_work.xml"                                           relativeToChangelogFile="true" />
-    <include file="0070_standart_work_resource.xml"                         relativeToChangelogFile="true" />
-    <include file="0080_work_resource.xml"                                  relativeToChangelogFile="true" />
-    <include file="0040_banks.xml"             relativeToChangelogFile="true" />
-    <include file="0050_org_forms.xml"         relativeToChangelogFile="true" />
-    <include file="0060_organizations.xml"     relativeToChangelogFile="true" />
+    <include file="0040_banks.xml"                                          relativeToChangelogFile="true" />
+    <include file="0050_org_forms.xml"                                      relativeToChangelogFile="true" />
+    <include file="0060_organizations.xml"                                  relativeToChangelogFile="true" />
+    <include file="0070_work.xml"                                           relativeToChangelogFile="true" />
+    <include file="0080_standart_work_resource.xml"                         relativeToChangelogFile="true" />
+    <include file="0090_work_resource.xml"                                  relativeToChangelogFile="true" />
 </databaseChangeLog>
 

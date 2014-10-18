@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0070_work.xml">
+
+    <changeSet id="70" author="Artiom Sharikov">
+        <createTable tableName="work" remarks="Работа" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор">
+                <constraints primaryKey="true" primaryKeyName="work_pkey" nullable="false"/>
+            </column>
+            <column name="quantity" type="numeric(32,16)" remarks="Кол-во">
+                <constraints nullable="false"/>
+            </column>
+            <column name="standart_work_id" type="bigint" remarks="Идентификатор норматива работы"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="work_standart_work_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="work" baseColumnNames="standart_work_id"
+            referencedTableName="standart_work" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+        <rollback>
+            <dropTable tableName="work" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
