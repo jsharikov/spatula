@@ -9,5 +9,8 @@
     <include file="0060_work.xml"                                           relativeToChangelogFile="true" />
     <include file="0070_standart_work_resource.xml"                         relativeToChangelogFile="true" />
     <include file="0080_work_resource.xml"                                  relativeToChangelogFile="true" />
+    <include file="0040_banks.xml"             relativeToChangelogFile="true" />
+    <include file="0050_org_forms.xml"         relativeToChangelogFile="true" />
+    <include file="0060_organizations.xml"     relativeToChangelogFile="true" />
 </databaseChangeLog>
 

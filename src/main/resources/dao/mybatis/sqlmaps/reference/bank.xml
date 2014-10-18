@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.reference.BankDao">
+
+    <insert id="create" parameterType="bank" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.banks (name)
+        VALUES
+            (#{name})
+    </insert>
+
+    <select id="read" parameterType="long" resultType="bank">
+        SELECT
+            id, name
+        FROM
+            ${db.schema}.banks
+        WHERE
+            id = #{id}
+    </select>
+
+    <update id="update" parameterType="bank">
+        UPDATE
+            ${db.schema}.banks
+        SET
+            name = #{name}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+            ${db.schema}.banks
+        WHERE
+            id = #{id}
+    </delete>
+
+    <select id="findAll" resultType="bank">
+        SELECT
+            id, name
+        FROM
+            ${db.schema}.banks
+    </select>
+
+</mapper>

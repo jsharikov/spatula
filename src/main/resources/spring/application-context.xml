@@ -15,4 +15,4 @@
         <import resource="aspect.xml" />
         <import resource="security.xml" />
         <import resource="web-context.xml" />
-  </beans>
+</beans>

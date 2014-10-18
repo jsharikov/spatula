@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+    logicalFilePath="data/0020_org_forms.xml">
+
+    <changeSet id="20" author="Anastasiya">
+        <insert tableName="org_forms" schemaName="${db.schema}">
+            <column name="name">АО</column>
+            <column name="description">Акционерное общество</column>
+        </insert>
+        <insert tableName="org_forms" schemaName="${db.schema}">
+            <column name="name">ТОО</column>
+            <column name="description">Товарищество с ограниченной ответственностью</column>
+        </insert>
+        <insert tableName="org_forms" schemaName="${db.schema}">
+            <column name="name">ЗАО</column>
+            <column name="description">Закрытое акционерное общество</column>
+        </insert>
+
+        <rollback>
+            <delete tableName="org_forms" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

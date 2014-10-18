@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.reference.OrgFormDao">
+
+    <insert id="create" parameterType="orgForm" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.org_forms (name, description)
+        VALUES
+            (#{name}, #{description})
+    </insert>
+
+    <select id="read" parameterType="long" resultType="orgForm">
+        SELECT
+            id, name, description
+        FROM
+            ${db.schema}.org_forms
+        WHERE
+            id = #{id}
+    </select>
+
+    <update id="update" parameterType="orgForm">
+        UPDATE
+            ${db.schema}.org_forms
+        SET
+            name = #{name},
+            description = #{description}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+            ${db.schema}.org_forms
+        WHERE
+            id = #{id}
+    </delete>
+
+    <select id="findAll" resultType="orgForm">
+        SELECT
+            id, name, description
+        FROM
+            ${db.schema}.org_forms
+    </select>
+
+</mapper>
