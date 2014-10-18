@@ -1,5 +1,8 @@
 package spatula.entity.reference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import spatula.entity.NamedEntity;
 
 public class Work extends NamedEntity {
@@ -13,6 +16,7 @@ public class Work extends NamedEntity {
     private Overhead overhead = new Overhead();
     private LaborCost workers = new LaborCost();
     private LaborCost machinists = new LaborCost();
+    private List<WorkResource> resources = new ArrayList<>();
 
     public String getCode() {
         return code;
@@ -55,6 +59,12 @@ public class Work extends NamedEntity {
     }
     public void setMachinists(LaborCost machinists) {
         this.machinists = machinists;
+    }
+    public List<WorkResource> getResources() {
+        return resources;
+    }
+    public void setResources(List<WorkResource> resources) {
+        this.resources = resources;
     }
 
 }

@@ -7,17 +7,14 @@
 
     <insert id="create" parameterType="work" keyProperty="id">
         INSERT INTO
-            ${db.schema}.work (code, name, unit_id)
+            ${db.schema}.work (code, name, unit_id, total_cost, wages_of_workers, oper_machines_cost, including_wages_of_machinists)
         VALUES
-            (#{code}, #{name}, #{unitId})
+            (#{code}, #{name}, #{unitId}, #{costPerUnit.total}, #{costPerUnit.wagesOfWorkers}, #{costPerUnit.operMachines}, #{costPerUnit.includingWagesOfMachinists})
     </insert>
 
     <select id="read" parameterType="long" resultType="work">
         SELECT
-            id,
-            code,
-            name,
-            unit_id
+            *
         FROM
             ${db.schema}.work
         WHERE
@@ -47,6 +44,15 @@
             *
         FROM
             ${db.schema}.work
+    </select>
+
+    <select id="readByCode" parameterType="String" resultType="work">
+        SELECT
+            *
+        FROM
+            ${db.schema}.work
+        WHERE
+            code = #{code}
     </select>
 
 </mapper>

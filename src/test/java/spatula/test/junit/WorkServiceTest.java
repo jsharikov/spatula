@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.math.BigDecimal;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class WorkServiceTest extends AbstractServiceTest {
         work.setName("Разработка грунта 4 группы с погрузкой наавтомобили-"
                 + "самосвалы экскаваторами с ковшом вместимостью 0,5 м3");
         work.setUnitId(UnitEnum.M3.getId());
+        work.getCostPerUnit().setTotal(new BigDecimal(20));
         workService.save(work);
     }
 

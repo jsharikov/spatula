@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,25 +21,39 @@ import spatula.entity.reference.CostWork;
 import spatula.entity.reference.LaborCost;
 import spatula.entity.reference.Overhead;
 import spatula.entity.reference.Work;
+import spatula.entity.reference.WorkResource;
 import spatula.enums.UnitEnum;
 
 public final class WorkParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkParser.class);
 
-    public static void parse() {
+    public static List<Work> parse() {
         File file = new File("D:\\k1580.xls");
+        List<Work> works = new ArrayList<>();
         InputStream is = null;
         try {
             is = new FileInputStream(file);
             HSSFWorkbook wb = new HSSFWorkbook(is);
             Sheet sheet = wb.getSheetAt(0);
             Iterator<Row> it = sheet.iterator();
+            boolean foundFirstRowWithWork = false;
+            Integer queueWork = null;
+            Work work = null;
             while (it.hasNext()) {
                 Row row = it.next();
                 Cell cell0 = row.getCell(0);
-                if (isConsecutiveNumberWork(cell0)) {
-                    processRowWithWork(it, row);
+                Integer value = parseQueueWork(cell0);
+                if (value != null) {
+                    queueWork = value;
+                    work = parseWork(it, row);
+                    works.add(work);
+                    if (!foundFirstRowWithWork) {
+                        foundFirstRowWithWork = true;
+                    }
+                } else if (foundFirstRowWithWork && isParseQueueWorkResource(cell0, queueWork)) {
+                    WorkResource workResource = parseWorkResource(row);
+                    work.getResources().add(workResource);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -45,9 +61,18 @@ public final class WorkParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return works;
     }
 
-    private static boolean isConsecutiveNumberWork(Cell cell) {
+    private static boolean isParseQueueWorkResource(Cell cell, Integer queueWork) {
+        if (cell != null && queueWork != null && cell.getCellType() == Cell.CELL_TYPE_STRING
+                && cell.getStringCellValue().startsWith(queueWork.toString())) {
+            return true;
+        }
+        return false;
+    }
+
+    private static Integer parseQueueWork(Cell cell) {
         if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING) {
             Integer value = null;
             try {
@@ -59,17 +84,18 @@ public final class WorkParser {
             if (value != null) {
                 LOGGER.debug("Значение первой ячейки " + cell.getRowIndex()
                         + "-строки удалось преобразовать в число " + value);
-                return true;
+                return value;
             }
         }
-        return false;
+        return null;
     }
 
-    private static void processRowWithWork(Iterator<Row> it, Row currRow) {
+    private static Work parseWork(Iterator<Row> it, Row currRow) {
         Work work = new Work();
         processFirstRowWithWork(currRow, work);
         processSecondRowWithWork(it.next(), work);
         processThirdRowWithWork(it.next(), work);
+        return work;
     }
 
     private static void processFirstRowWithWork(Row row, Work work) {
@@ -130,6 +156,24 @@ public final class WorkParser {
         if (unitEnum != null) {
             work.setUnitId(unitEnum.getId());
         }
+    }
+
+    private static WorkResource parseWorkResource(Row row) {
+        WorkResource workResource = new WorkResource();
+
+        workResource.setCode(row.getCell(1).getStringCellValue());
+        workResource.setName(row.getCell(2).getStringCellValue());
+        UnitEnum unitEnum = UnitEnum.getUnitEnumByName(row.getCell(3).getStringCellValue());
+        if (unitEnum != null) {
+            workResource.setUnitId(unitEnum.getId());
+        }
+        workResource.setQuantity(getNumericCellValueOrNull(row.getCell(4)));
+        workResource.setTotalQuantity(getNumericCellValueOrNull(row.getCell(5)));
+        workResource.setCost(getNumericCellValueOrNull(row.getCell(6)));
+        workResource.setTotalCost(getNumericCellValueOrNull(row.getCell(7)));
+
+
+        return workResource;
     }
 
     private WorkParser() {

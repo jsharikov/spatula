@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0030_standart_work.xml">
+
+    <changeSet id="30" author="Artiom Sharikov">
+        <createTable tableName="standart_work" remarks="Норматив работы" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор">
+                <constraints primaryKey="true" primaryKeyName="standart_work_pkey" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(256)" remarks="Шифр">
+                <constraints nullable="false" unique="true" uniqueConstraintName="standart_work_code_ukey"/>
+            </column>
+            <column name="name" type="text" remarks="Наименование">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_id" type="bigint" remarks="Идентификатор единицы измереня">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_cost" type="numeric(32,16)" remarks="Общая стоимость">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wages_of_workers" type="numeric(32,16)" remarks="ЗП рабочих-строителей"/>
+            <column name="oper_machines_cost" type="numeric(32,16)" remarks="стоимость экспл. машин"/>
+            <column name="including_wages_of_machinists" type="numeric(32,16)" remarks="в т.ч. ЗП машинистов"/>
+            <column name="percent" type="int" remarks="Накладные расходы(%)"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="standart_work_unit_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="standart_work" baseColumnNames="unit_id"
+            referencedTableName="unit" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+        <rollback>
+            <dropTable tableName="standart_work" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
