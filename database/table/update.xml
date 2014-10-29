@@ -7,7 +7,9 @@
     <include file="0010_unit.xml"              relativeToChangelogFile="true" />
     <include file="0030_work.xml"              relativeToChangelogFile="true" />
     <include file="0040_banks.xml"             relativeToChangelogFile="true" />
+    <include file="0041_bank_accounts.xml"     relativeToChangelogFile="true" />
     <include file="0050_org_forms.xml"         relativeToChangelogFile="true" />
     <include file="0060_organizations.xml"     relativeToChangelogFile="true" />
+    <include file="0070_org_telephone.xml"     relativeToChangelogFile="true" />
 </databaseChangeLog>
 

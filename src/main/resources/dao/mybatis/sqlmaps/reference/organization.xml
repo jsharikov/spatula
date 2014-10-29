@@ -5,17 +5,17 @@
 
 <mapper namespace="spatula.dao.reference.OrganizationDao">
 
-    <insert id="create" parameterType="org" keyProperty="id">
+    <insert id="create" parameterType="organization" keyProperty="id">
         INSERT INTO
             ${db.schema}.organizations
-                (name, org_form_id, bin, address, iik, bank_id, bik)
+                (name, org_form_id, bin, address, bank_account_id, email)
         VALUES
-            (#{name}, #{orgFormId}, #{bin}, #{address}, #{iik}, #{bankId}, #{bik})
+            (#{name}, #{orgFormId}, #{bin}, #{address}, #{bankAccountId}, #{email})
     </insert>
 
     <select id="read" parameterType="long" resultType="org">
         SELECT
-            id, name, org_form_id, bin, address, iik, bank_id, bik
+            id, name, org_form_id, bin, address, bank_account_id, email
         FROM
             ${db.schema}.organizations
         WHERE
@@ -30,9 +30,8 @@
             org_form_id = #{orgFormId},
             bin = #{bin},
             address = #{address},
-            iik = #{iik},
-            bank_id = #{bankId},
-            bin = #{bin}
+            bank_account_id = #{bankAccountId},
+            email = #{email}
         WHERE
             id = #{id}
     </update>
@@ -46,7 +45,7 @@
 
     <select id="findAll" resultType="org">
         SELECT
-            id, name, org_form_id, bin, address, iik, bank_id, bik
+            id, name, org_form_id, bin, address, bank_account_id, email
         FROM
             ${db.schema}.organizations
     </select>

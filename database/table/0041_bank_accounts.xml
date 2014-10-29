@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0041_bank_accounts.xml">
+
+    <changeSet id="41" author="Anastasiya">
+        <createTable tableName="bank_accounts" remarks="Раcсчётные счета" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор счёта">
+                <constraints primaryKey="true" primaryKeyName="pk_bank_accounts" nullable="false"/>
+            </column>
+            <column name="bank_id" type="bigint" remarks="Идентификатор банка">
+                <constraints nullable="false"/>
+            </column>
+            <column name="iik" type="text" remarks="ИИК">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_bank_accounts_bank_id"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="bank_accounts" baseColumnNames="bank_id"
+            referencedTableName="banks" referencedColumnNames="id"
+            referencedTableSchemaName="${db.schema}" />
+
+        <rollback>
+            <dropTable tableName="bank_accounts" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

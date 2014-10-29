@@ -7,14 +7,14 @@
 
     <insert id="create" parameterType="bank" keyProperty="id">
         INSERT INTO
-            ${db.schema}.banks (name)
+            ${db.schema}.banks (name, bik)
         VALUES
-            (#{name})
+            (#{name}, #{bik})
     </insert>
 
     <select id="read" parameterType="long" resultType="bank">
         SELECT
-            id, name
+            id, name, bik
         FROM
             ${db.schema}.banks
         WHERE
@@ -25,7 +25,8 @@
         UPDATE
             ${db.schema}.banks
         SET
-            name = #{name}
+            name = #{name},
+            bik = #{bik}
         WHERE
             id = #{id}
     </update>
@@ -39,7 +40,7 @@
 
     <select id="findAll" resultType="bank">
         SELECT
-            id, name
+            id, name, bik
         FROM
             ${db.schema}.banks
     </select>

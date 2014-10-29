@@ -12,11 +12,9 @@ public class Organization extends NamedEntity {
 
 	private String address;
 
-	private String iik;
+	private Long bankAccountId;
 
-	private Long bankId;
-
-	private String bik;
+	private String email;
 
 	public Long getOrgFormId() {
 		return orgFormId;
@@ -42,28 +40,20 @@ public class Organization extends NamedEntity {
 		this.address = address;
 	}
 
-	public String getIik() {
-		return iik;
+	public Long getBankAccountId() {
+		return bankAccountId;
 	}
 
-	public void setIik(String iik) {
-		this.iik = iik;
+	public void setBankAccountId(Long bankAccountId) {
+		this.bankAccountId = bankAccountId;
 	}
 
-	public Long getBankId() {
-		return bankId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setBankId(Long bankId) {
-		this.bankId = bankId;
-	}
-
-	public String getBik() {
-		return bik;
-	}
-
-	public void setBik(String bik) {
-		this.bik = bik;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

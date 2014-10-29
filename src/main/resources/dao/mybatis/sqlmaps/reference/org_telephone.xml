@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.reference.OrgTelephoneDao">
+
+    <insert id="create" parameterType="orgTelephone" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.org_telephone (tel, fax, org_id)
+        VALUES
+            (#{tel}, #{fax}, #{orgId})
+    </insert>
+
+    <select id="read" parameterType="long" resultType="orgTelephone">
+        SELECT
+            id, tel, fax, org_id
+        FROM
+            ${db.schema}.org_telephone
+        WHERE
+            id = #{id}
+    </select>
+
+    <update id="update" parameterType="orgTelephone">
+        UPDATE
+            ${db.schema}.org_telephone
+        SET
+            tel = #{tel},
+            fax = #{fax},
+            org_id = #{orgId}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+            ${db.schema}.org_telephone
+        WHERE
+            id = #{id}
+    </delete>
+
+    <select id="findAll" resultType="orgTelephone">
+        SELECT
+            id, tel, fax, org_id
+        FROM
+            ${db.schema}.org_telephone
+    </select>
+
+</mapper>

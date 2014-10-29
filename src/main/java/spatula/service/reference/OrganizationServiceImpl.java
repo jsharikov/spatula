@@ -12,7 +12,7 @@ import spatula.entity.reference.Organization;
 public class OrganizationServiceImpl implements OrganizationService {
 
 	@Autowired
-	OrganizationDao orgDao;
+	private OrganizationDao orgDao;
 
 	@Override
 	public void save(Organization org) {
