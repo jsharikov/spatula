@@ -14,6 +14,9 @@
             <column name="name" type="text" remarks="Наименование">
                 <constraints nullable="false"/>
             </column>
+            <column name="bik" type="text" remarks="БИК">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <rollback>
             <dropTable tableName="banks" schemaName="${db.schema}"/>
