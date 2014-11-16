@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0150_resource_work.xml">
+
+    <changeSet id="150" author="Artiom Sharikov">
+        <createTable tableName="resource_work" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор">
+                <constraints primaryKey="true" primaryKeyName="resource_work_pkey" nullable="false"/>
+            </column>
+            <column name="work_id" type="bigint" remarks="Идентификатор работы">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resource_id" type="bigint" remarks="Идентификатор ресурса">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="numeric(32,16)" remarks="Кол-во">
+                <constraints nullable="false"/>
+            </column>
+            <column name="queue" type="int" remarks="№ п/п">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="resource_work_work_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="resource_work" baseColumnNames="work_id"
+            referencedTableName="work" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+         <addForeignKeyConstraint constraintName="resource_work_resource_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="resource_work" baseColumnNames="resource_id"
+            referencedTableName="resource" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+        <rollback>
+            <dropTable tableName="resource_work" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

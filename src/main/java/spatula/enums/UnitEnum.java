@@ -1,5 +1,10 @@
 package spatula.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import spatula.entity.reference.Unit;
+
 public enum UnitEnum {
 
     M3(1L, "м3"),
@@ -10,7 +15,8 @@ public enum UnitEnum {
     KG(6L, "кг"),
     PC(7L, "шт"),
     T(8L, "т;1т"),
-    M(9L, "м");
+    M(9L, "м"),
+    PC1000(10L, "1000шт");
 
     private Long id;
     private String name;
@@ -29,6 +35,17 @@ public enum UnitEnum {
             }
         }
         return null;
+    }
+
+    public static List<Unit> getUnits() {
+        List<Unit> units = new ArrayList<>(UnitEnum.values().length);
+        for (UnitEnum unitEnum : UnitEnum.values()) {
+            Unit unit = new Unit();
+            unit.setId(unitEnum.getId());
+            unit.setName(unitEnum.getName());
+            units.add(unit);
+        }
+        return units;
     }
 
     public Long getId() {

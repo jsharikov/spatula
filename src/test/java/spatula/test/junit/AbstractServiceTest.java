@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
         "classpath:spring/dao.xml",
         "classpath:spring/aspect.xml",
         "classpath:spring/security.xml",
+        "classpath:spring/test.xml",
         })
 public abstract class AbstractServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 

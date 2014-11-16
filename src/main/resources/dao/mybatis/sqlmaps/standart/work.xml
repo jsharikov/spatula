@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.standart.WorkDao">
+
+    <resultMap type="work" id="workResultMap">
+        <id property="id" column="WORK_ID"/>
+        <result property="totalCost" column="WORK_TOTAL_COST"/>
+        <result property="wagesOfWorkers" column="WORK_WAGES_OF_WORKERS"/>
+        <result property="operMachinesCost" column="WORK_OPER_MACHINES_COST"/>
+        <result property="includingWagesOfMachinists" column="WORK_INCLUDING_WAGES_OF_MACHINISTS"/>
+        <result property="percent" column="WORK_PERCENT"/>
+        <result property="workTypeId" column="WORK_WORK_TYPE_ID"/>
+        <result property="standartId" column="WORK_STANDART_ID"/>
+        <association property="standart" resultMap="spatula.dao.standart.StandartDao.standartResultMap" columnPrefix="WORK_"/>
+        <association property="workType" resultMap="spatula.dao.reference.WorkTypeDao.workTypeResultMap"/>
+        <collection property="resources" resultMap="spatula.dao.standart.ResourceWorkDao.resourceWorkResultMap"/>
+    </resultMap>
+
+    <insert id="create" parameterType="work" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.work (total_cost, wages_of_workers, oper_machines_cost, including_wages_of_machinists, percent, standart_id, work_type_id)
+        VALUES
+            (#{totalCost}, #{wagesOfWorkers}, #{operMachinesCost}, #{includingWagesOfMachinists}, #{percent}, #{standartId}, #{workTypeId})
+    </insert>
+
+    <select id="findAll" resultMap="workResultMap">
+        SELECT
+            w.id AS WORK_ID,
+            w.total_cost AS WORK_TOTAL_COST,
+            w.wages_of_workers AS WORK_WAGES_OF_WORKERS,
+            w.oper_machines_cost AS WORK_OPER_MACHINES_COST,
+            w.including_wages_of_machinists AS WORK_INCLUDING_WAGES_OF_MACHINISTS,
+            w.percent AS WORK_PERCENT,
+            w.standart_id AS WORK_STANDART_ID,
+            std.id AS WORK_STANDART_ID,
+            std.code AS WORK_STANDART_CODE,
+            std.unit_id AS WORK_STANDART_UNIT_ID,
+            std.name AS WORK_STANDART_NAME,
+            unit.id AS WORK_UNIT_ID,
+            unit.name AS WORK_UNIT_NAME,
+            work_type.id AS WORK_TYPE_ID,
+            work_type.name AS WORK_TYPE_NAME,
+            resource_work.id AS RESOURCE_WORK_ID,
+            resource_work.work_id AS RESOURCE_WORK_WORK_ID,
+            resource_work.resource_id AS RESOURCE_WORK_RESOURCE_ID,
+            resource_work.quantity AS RESOURCE_WORK_QUANTITY,
+            resource_work.queue AS RESOURCE_WORK_QUEUE,
+            res.id AS RESOURCE_ID,
+            res.cost AS RESOURCE_COST,
+            res.standart_id AS RESOURCE_STANDART_ID,
+            res.wage_of_machinist AS RESOURCE_WAGE_OF_MACHINIST,
+            res.machine AS RESOURCE_MACHINE,
+            rstd.id AS STANDART_ID,
+            rstd.code AS STANDART_CODE,
+            rstd.unit_id AS STANDART_UNIT_ID,
+            rstd.name AS STANDART_NAME,
+            runit.id AS UNIT_ID,
+            runit.name as UNIT_NAME
+        FROM
+            ${db.schema}.work w
+        INNER JOIN
+            ${db.schema}.standart std ON std.id = w.standart_id
+        INNER JOIN
+            ${db.schema}.unit unit ON unit.id = std.unit_id
+        LEFT JOIN
+            ${db.schema}.work_type work_type ON work_type.id = w.work_type_id
+        LEFT JOIN
+            ${db.schema}.resource_work resource_work ON resource_work.work_id = w.id
+        LEFT JOIN
+            ${db.schema}.resource res ON res.id = resource_work.resource_id
+        LEFT JOIN
+            ${db.schema}.standart rstd ON rstd.id = res.standart_id
+        LEFT JOIN
+            ${db.schema}.unit runit ON runit.id = rstd.unit_id
+    </select>
+
+</mapper>

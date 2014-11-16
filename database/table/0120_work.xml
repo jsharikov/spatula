@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0120_work.xml">
+
+    <changeSet id="120" author="Artiom Sharikov">
+        <createTable tableName="work" remarks="Работа" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор">
+                <constraints primaryKey="true" primaryKeyName="work_pkey" nullable="false"/>
+            </column>
+            <column name="total_cost" type="numeric(32,16)" remarks="Общая стоимость">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wages_of_workers" type="numeric(32,16)" remarks="ЗП рабочих-строителей"/>
+            <column name="oper_machines_cost" type="numeric(32,16)" remarks="Стоимость экспл. машин"/>
+            <column name="including_wages_of_machinists" type="numeric(32,16)" remarks="в т.ч. ЗП машинистов"/>
+            <column name="percent" type="int" remarks="Накладные расходы(%)"/>
+            <column name="standart_id" type="bigint" remarks="Идентификатор норматива">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_type_id" type="bigint" remarks="Идентификатор типа работы"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="work_standart_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="work" baseColumnNames="standart_id"
+            referencedTableName="standart" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+         <addForeignKeyConstraint constraintName="work_work_type_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="work" baseColumnNames="work_type_id"
+            referencedTableName="work_type" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+        <rollback>
+            <dropTable tableName="work" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

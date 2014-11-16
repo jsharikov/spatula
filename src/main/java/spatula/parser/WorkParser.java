@@ -1,4 +1,4 @@
-package spatula.parser;
+/*package spatula.parser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,9 +17,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import spatula.entity.reference.CostWork;
-import spatula.entity.reference.LaborCost;
-import spatula.entity.reference.Overhead;
+import spatula.entity.reference.StandartWork;
+import spatula.entity.reference.StandartWorkResource;
 import spatula.entity.reference.Work;
 import spatula.entity.reference.WorkResource;
 import spatula.enums.UnitEnum;
@@ -92,6 +91,8 @@ public final class WorkParser {
 
     private static Work parseWork(Iterator<Row> it, Row currRow) {
         Work work = new Work();
+        work.setStandartWork(new StandartWork());
+        work.setResources(new ArrayList<WorkResource>());
         processFirstRowWithWork(currRow, work);
         processSecondRowWithWork(it.next(), work);
         processThirdRowWithWork(it.next(), work);
@@ -100,12 +101,11 @@ public final class WorkParser {
 
     private static void processFirstRowWithWork(Row row, Work work) {
 
-        work.setCode(row.getCell(1).getStringCellValue());
-        work.setName(row.getCell(2).getStringCellValue());
-
-        CostWork costPerUnit = work.getCostPerUnit();
-        costPerUnit.setTotal(getNumericCellValueOrNull(row.getCell(4)));
-        costPerUnit.setOperMachines(getNumericCellValueOrNull(row.getCell(5)));
+        work.getStandartWork().setCode(row.getCell(1).getStringCellValue());
+        work.getStandartWork().setName(row.getCell(2).getStringCellValue());
+        work.setQuantity(getNumericCellValueOrNull(row.getCell(3)));
+        work.getStandartWork().setTotalCost(getNumericCellValueOrNull(row.getCell(4)));
+        work.getStandartWork().setOperMachinesCost(getNumericCellValueOrNull(row.getCell(5)));
 
         CostWork totalCost = work.getTotalCost();
         totalCost.setTotal(getNumericCellValueOrNull(row.getCell(6)));
@@ -135,9 +135,9 @@ public final class WorkParser {
 
     private static void processSecondRowWithWork(Row row, Work work) {
 
-        CostWork costPerUnit = work.getCostPerUnit();
-        costPerUnit.setWagesOfWorkers(getNumericCellValueOrNull(row.getCell(4)));
-        costPerUnit.setIncludingWagesOfMachinists(getNumericCellValueOrNull(row.getCell(5)));
+        work.getStandartWork().setWagesOfWorkers(getNumericCellValueOrNull(row.getCell(4)));
+        work.getStandartWork().setIncludingWagesOfMachinists(getNumericCellValueOrNull(row.getCell(5)));
+        work.getStandartWork().setPercent(getIntegerCellValueOrNull(row.getCell(8)));
 
         CostWork totalCost = work.getTotalCost();
         totalCost.setWagesOfWorkers(getNumericCellValueOrNull(row.getCell(6)));
@@ -154,24 +154,25 @@ public final class WorkParser {
     private static void processThirdRowWithWork(Row row, Work work) {
         UnitEnum unitEnum = UnitEnum.getUnitEnumByName(row.getCell(2).getStringCellValue());
         if (unitEnum != null) {
-            work.setUnitId(unitEnum.getId());
+            work.getStandartWork().setUnitId(unitEnum.getId());
         }
     }
 
     private static WorkResource parseWorkResource(Row row) {
         WorkResource workResource = new WorkResource();
 
-        workResource.setCode(row.getCell(1).getStringCellValue());
-        workResource.setName(row.getCell(2).getStringCellValue());
+        StandartWorkResource standartWorkResource = new StandartWorkResource();
+        standartWorkResource.setCode(row.getCell(1).getStringCellValue());
+        standartWorkResource.setName(row.getCell(2).getStringCellValue());
         UnitEnum unitEnum = UnitEnum.getUnitEnumByName(row.getCell(3).getStringCellValue());
         if (unitEnum != null) {
-            workResource.setUnitId(unitEnum.getId());
+            standartWorkResource.setUnitId(unitEnum.getId());
         }
+        workResource.setStandartWorkResource(standartWorkResource);
+
         workResource.setQuantity(getNumericCellValueOrNull(row.getCell(4)));
-        workResource.setTotalQuantity(getNumericCellValueOrNull(row.getCell(5)));
         workResource.setCost(getNumericCellValueOrNull(row.getCell(6)));
         workResource.setTotalCost(getNumericCellValueOrNull(row.getCell(7)));
-
 
         return workResource;
     }
@@ -181,3 +182,4 @@ public final class WorkParser {
     }
 
 }
+*/

@@ -11,7 +11,7 @@ import spatula.entity.reference.OrgForm;
 @Service
 public class OrgFormServiceImpl implements OrgFormService {
 
-	@Autowired
+	@Autowired(required = false)
 	OrgFormDao orgFormDao;
 
 	@Override

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.smeta.WorkSmetaDao">
+
+    <!-- <insert id="create" parameterType="workSmeta" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.work_smeta (work_id, smeta_id, quantity, queue)
+        VALUES
+            (#{workId}, #{smetaId}, #{quantity}, #{queue})
+    </insert>
+
+    <select id="read" parameterType="long" resultMap="smeta">
+        SELECT
+            smeta.id AS SMETA_ID,
+            work.id AS WORK_ID,
+            work.quantity AS WORK_QUANTITY,
+            work.standart_work_id AS WORK_STANDART_WORK_ID,
+            work.smeta_id AS WORK_SMETA_ID,
+            sw.id AS STANDART_WORK_ID,
+            sw.code AS STANDART_WORK_CODE,
+            sw.name AS STANDART_WORK_NAME,
+            sw.unit_id AS STANDART_WORK_UNIT_ID,
+            sw.total_cost AS STANDART_WORK_TOTAL_COST,
+            sw.wages_of_workers AS STANDART_WORK_WAGES_OF_WORKERS,
+            sw.oper_machines_cost AS STANDART_WORK_OPER_MACHINES_COST,
+            sw.including_wages_of_machinists AS STANDART_WORK_INCLUDING_WAGES_OF_MACHINISTS,
+            sw.percent AS STANDART_WORK_PERCENT,
+            wr.id AS WORK_RESOURCE_ID,
+            wr.quantity AS WORK_RESOURCE_QUANTITY,
+            wr.cost AS WORK_RESOURCE_COST,
+            wr.total_cost AS WORK_RESOURCE_TOTAL_COST,
+            wr.standart_work_resource_id AS WORK_RESOURCE_STANDART_WORK_RESOURCE_ID,
+            wr.work_id AS WORK_RESOURCE_WORK_ID,
+            swr.id AS STANDART_WORK_RESOURCE_ID,
+            swr.code AS STANDART_WORK_RESOURCE_CODE,
+            swr.name AS STANDART_WORK_RESOURCE_NAME,
+            swr.unit_id AS STANDART_WORK_RESOURCE_UNIT_ID
+        FROM
+            ${db.schema}.smeta
+        LEFT JOIN
+            ${db.schema}.work ON smeta.id = work.smeta_id
+        LEFT JOIN
+            ${db.schema}.standart_work sw ON work.standart_work_id = sw.id
+        LEFT JOIN
+            ${db.schema}.work_resource wr ON wr.work_id = work.id
+        LEFT JOIN
+            ${db.schema}.standart_work_resource swr ON swr.id = wr.standart_work_resource_id
+        WHERE
+            smeta.id = #{id}
+    </select> -->
+
+</mapper>

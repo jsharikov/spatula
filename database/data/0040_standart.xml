@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+    logicalFilePath="data/0040_standart.xml">
+
+    <changeSet id="40" author="Artiom Sharikov">
+        <insert tableName="standart" schemaName="${db.schema}">
+            <column name="id">-1</column>
+            <column name="code">1</column>
+            <column name="name">Затраты труда рабочих-строителей</column>
+            <column name="unit_id">2</column>
+        </insert>
+        <insert tableName="standart" schemaName="${db.schema}">
+            <column name="id">-2</column>
+            <column name="code">3</column>
+            <column name="name">Затраты труда машинистов</column>
+            <column name="unit_id">3</column>
+        </insert>
+        <insert tableName="standart" schemaName="${db.schema}">
+            <column name="id">-3</column>
+            <column name="code">712</column>
+            <column name="name">Прочие машины</column>
+            <column name="unit_id">4</column>
+        </insert>
+        <insert tableName="standart" schemaName="${db.schema}">
+            <column name="id">-4</column>
+            <column name="code">6237</column>
+            <column name="name">Прочие материалы</column>
+            <column name="unit_id">4</column>
+        </insert>
+        <rollback>
+            <delete tableName="standart" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

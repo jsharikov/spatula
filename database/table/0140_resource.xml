@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0140_resource.xml">
+
+    <changeSet id="140" author="Artiom Sharikov">
+        <createTable tableName="resource" remarks="Ресурс" schemaName="${db.schema}">
+            <column name="id" type="bigint" remarks="Идентификатор" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="resource_pkey" nullable="false"/>
+            </column>
+            <column name="cost" type="numeric(32,16)" remarks="Стоимость">
+                <constraints nullable="false"/>
+            </column>
+            <column name="standart_id" type="bigint" remarks="Идентификатор норматива">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wage_of_machinist" type="numeric(32,16)" remarks="ЗП машиниста"/>
+            <column name="machine" type="bool" remarks="Является ли строительной машиной"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="resource_standart_id_fkey"
+            baseTableSchemaName="${db.schema}"
+            baseTableName="resource" baseColumnNames="standart_id"
+            referencedTableName="standart" referencedColumnNames="id" referencedTableSchemaName="${db.schema}"
+         />
+        <rollback>
+            <dropTable tableName="resource" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

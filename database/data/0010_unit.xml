@@ -43,6 +43,10 @@
             <column name="id">9</column>
             <column name="name">м</column>
         </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">10</column>
+            <column name="name">1000шт</column>
+        </insert>
         <rollback>
             <delete tableName="unit" schemaName="${db.schema}"/>
         </rollback>

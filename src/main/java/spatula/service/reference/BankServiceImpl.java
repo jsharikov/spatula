@@ -11,7 +11,7 @@ import spatula.entity.reference.Bank;
 @Service
 public class BankServiceImpl implements BankService {
 
-    @Autowired
+    @Autowired(required = false)
     private BankDao bankDao;
 
 	@Override

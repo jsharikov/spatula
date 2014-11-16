@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0100_smeta.xml">
+
+    <changeSet id="100" author="Artiom Sharikov">
+        <createTable tableName="smeta" remarks="Смета" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор">
+                <constraints primaryKey="true" primaryKeyName="smeta_pkey" nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="smeta" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

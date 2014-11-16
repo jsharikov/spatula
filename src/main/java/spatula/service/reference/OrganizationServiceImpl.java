@@ -11,7 +11,7 @@ import spatula.entity.reference.Organization;
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
-	@Autowired
+	@Autowired(required = false)
 	OrganizationDao orgDao;
 
 	@Override

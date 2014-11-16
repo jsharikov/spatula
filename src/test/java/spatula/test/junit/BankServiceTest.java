@@ -6,12 +6,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import spatula.entity.reference.Bank;
 import spatula.service.reference.BankService;
 
+@Ignore
 public class BankServiceTest extends AbstractServiceTest {
 
 	@Autowired

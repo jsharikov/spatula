@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0160_work_type.xml">
+
+    <changeSet id="160" author="Artiom Sharikov">
+        <createTable tableName="work_type" remarks="Тип работы" schemaName="${db.schema}">
+            <column name="id" type="bigint" remarks="Идентификатор">
+                <constraints primaryKey="true" primaryKeyName="work_type_pkey" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(32)" remarks="Наименование">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="work_type" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

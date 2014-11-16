@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.standart.ResourceDao">
+
+    <resultMap type="resource" id="resourceResultMap">
+        <id property="id" column="RESOURCE_ID"/>
+        <result property="cost" column="RESOURCE_COST"/>
+        <result property="standartId" column="RESOURCE_STANDART_ID"/>
+        <result property="wageOfMachinist" column="RESOURCE_STANDART_WAGE_OF_MACHINIST"/>
+        <result property="machine" column="RESOURCE_STANDART_MACHINE"/>
+        <association property="standart" resultMap="spatula.dao.standart.StandartDao.standartResultMap"/>
+    </resultMap>
+
+    <insert id="create" parameterType="resource" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.resource (standart_id, cost, wage_of_machinist, machine)
+        VALUES
+            (#{standartId}, #{cost}, #{wageOfMachinist}, #{machine})
+    </insert>
+
+    <select id="read" parameterType="long" resultMap="resourceResultMap">
+        SELECT
+            res.id AS RESOURCE_ID,
+            res.cost AS RESOURCE_COST,
+            res.standart_id AS RESOURCE_STANDART_ID,
+            res.wage_of_machinist AS RESOURCE_STANDART_WAGE_OF_MACHINIST,
+            res.machine AS RESOURCE_STANDART_MACHINE,
+            std.id AS STANDART_ID,
+            std.code AS STANDART_CODE,
+            std.name AS STANDART_NAME,
+            std.unit_id AS STANDART_UNIT_ID
+        FROM
+            ${db.schema}.resource res
+        INNER JOIN
+            ${db.schema}.standart std ON std.id = res.standart_id
+        WHERE
+            res.id = #{id}
+    </select>
+
+    <update id="update" parameterType="resource">
+        UPDATE
+            ${db.schema}.resource
+        SET
+            cost = #{cost},
+            standart_id = #{standartId}
+            wage_of_machinist = #{wageOfMachinist},
+            machine = #{machine}
+        WHERE
+            id = #{id}
+    </update>
+
+    <select id="findAll" resultMap="resourceResultMap">
+        SELECT
+            res.id AS RESOURCE_ID,
+            res.cost AS RESOURCE_COST,
+            res.standart_id AS RESOURCE_STANDART_ID,
+            res.wage_of_machinist AS RESOURCE_STANDART_WAGE_OF_MACHINIST,
+            res.machine AS RESOURCE_STANDART_MACHINE,
+            std.id AS STANDART_ID,
+            std.code AS STANDART_CODE,
+            std.name AS STANDART_NAME,
+            std.unit_id AS STANDART_UNIT_ID
+        FROM
+            ${db.schema}.resource res
+        INNER JOIN
+            ${db.schema}.standart std ON std.id = res.standart_id
+    </select>
+
+    <select id="findByStandartId" parameterType="long" resultMap="resourceResultMap">
+        SELECT
+            res.id AS RESOURCE_ID,
+            res.cost AS RESOURCE_COST,
+            res.standart_id AS RESOURCE_STANDART_ID,
+            res.wage_of_machinist AS RESOURCE_STANDART_WAGE_OF_MACHINIST,
+            res.machine AS RESOURCE_STANDART_MACHINE,
+            std.id AS STANDART_ID,
+            std.code AS STANDART_CODE,
+            std.name AS STANDART_NAME,
+            std.unit_id AS STANDART_UNIT_ID
+        FROM
+            ${db.schema}.resource res
+        INNER JOIN
+            ${db.schema}.standart std ON std.id = res.standart_id
+        WHERE
+            std.id= #{standartId}
+    </select>
+
+</mapper>

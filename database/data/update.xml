@@ -6,5 +6,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <include file="0010_unit.xml"                       relativeToChangelogFile="true" />
     <include file="0020_org_forms.xml"                  relativeToChangelogFile="true" />
+    <include file="0030_work_type.xml"                  relativeToChangelogFile="true" />
+    <include file="0040_standart.xml"                   relativeToChangelogFile="true" />
 
 </databaseChangeLog>

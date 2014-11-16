@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.standart.StandartDao">
+
+    <resultMap type="standart" id="standartResultMap">
+        <id property="id" column="STANDART_ID" />
+        <result property="code" column="STANDART_CODE" />
+        <result property="name" column="STANDART_NAME" />
+        <result property="unitId" column="STANDART_UNIT_ID" />
+        <association property="unit" resultMap="spatula.dao.reference.UnitDao.unitResultMap"/>
+    </resultMap>
+
+    <insert id="create" parameterType="standart" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.standart (code, name, unit_id)
+        VALUES
+            (#{code}, #{name}, #{unitId})
+    </insert>
+
+    <select id="read" parameterType="long" resultType="standart">
+        SELECT
+            *
+        FROM
+            ${db.schema}.standart
+        WHERE
+            id = #{id}
+    </select>
+
+    <update id="update" parameterType="standart">
+        UPDATE
+            ${db.schema}.standart
+        SET
+            code = #{code},
+            name = #{name},
+            unit_id = #{unitId}
+        WHERE
+            id = #{id}
+    </update>
+
+    <select id="existsByCode" parameterType="String" resultType="boolean">
+        SELECT
+            CASE
+                WHEN
+                    count(*) > 0
+                THEN
+                    true
+                ELSE
+                    false
+            END
+        FROM
+            ${db.schema}.standart
+        WHERE
+            code = #{code}
+    </select>
+
+    <select id="findByCode" parameterType="String" resultType="standart">
+        SELECT
+            *
+        FROM
+            ${db.schema}.standart
+        WHERE
+            code = #{code}
+    </select>
+
+    <select id="findAll" resultType="standart">
+        SELECT
+            *
+        FROM
+            ${db.schema}.standart
+    </select>
+
+</mapper>

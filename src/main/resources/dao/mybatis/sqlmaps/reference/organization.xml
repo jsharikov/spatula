@@ -5,7 +5,7 @@
 
 <mapper namespace="spatula.dao.reference.OrganizationDao">
 
-    <insert id="create" parameterType="org" keyProperty="id">
+    <!-- <insert id="create" parameterType="organization" keyProperty="id">
         INSERT INTO
             ${db.schema}.organizations
                 (name, org_form_id, bin, address, iik, bank_id, bik)
@@ -13,7 +13,7 @@
             (#{name}, #{orgFormId}, #{bin}, #{address}, #{iik}, #{bankId}, #{bik})
     </insert>
 
-    <select id="read" parameterType="long" resultType="org">
+    <select id="read" parameterType="long" resultType="Organization">
         SELECT
             id, name, org_form_id, bin, address, iik, bank_id, bik
         FROM
@@ -22,7 +22,7 @@
             id = #{id}
     </select>
 
-    <update id="update" parameterType="org">
+    <update id="update" parameterType="Organization">
         UPDATE
             ${db.schema}.organizations
         SET
@@ -44,11 +44,11 @@
             id = #{id}
     </delete>
 
-    <select id="findAll" resultType="org">
+    <select id="findAll" resultType="Organization">
         SELECT
             id, name, org_form_id, bin, address, iik, bank_id, bik
         FROM
             ${db.schema}.organizations
     </select>
-
+ -->
 </mapper>
