@@ -5,7 +5,7 @@
 
 <mapper namespace="spatula.dao.reference.BankAccountDao">
 
-    <insert id="create" parameterType="bankAccount" keyProperty="id">
+  <!--   <insert id="create" parameterType="bankAccount" keyProperty="id">
         INSERT INTO
             ${db.schema}.bank_account (bank_id, iik)
         VALUES
@@ -43,6 +43,6 @@
             id, bank_id, iik
         FROM
             ${db.schema}.bank_account
-    </select>
+    </select> -->
 
 </mapper>

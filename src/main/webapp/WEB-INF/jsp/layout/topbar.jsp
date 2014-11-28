@@ -36,6 +36,16 @@
                         <li><a href="#">One more separated link</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> Документы <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <c:url var="templateUrl" value="/documents/template"/>
+                        <li><a href="${templateUrl}">Шаблоны</a></li>
+                        <c:url var="contractUrl" value="/documents/contract"/>
+                        <li><a href="${contractUrl}">Договора</a></li>
+                    </ul>
+                </li>
             </ul>
 	</div>
 </div>
