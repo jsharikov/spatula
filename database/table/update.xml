@@ -6,16 +6,11 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
     <include file="0010_unit.xml"                                           relativeToChangelogFile="true" />
-    <!-- <include file="0030_standard_work.xml"                                  relativeToChangelogFile="true" /> -->
     <include file="0040_banks.xml"                                          relativeToChangelogFile="true" />
-    <include file="0041_bank_accounts.xml"                                          relativeToChangelogFile="true" />
+    <include file="0041_bank_accounts.xml"                                  relativeToChangelogFile="true" />
     <include file="0050_org_forms.xml"                                      relativeToChangelogFile="true" />
     <include file="0060_organizations.xml"                                  relativeToChangelogFile="true" />
     <include file="0070_org_telephone.xml"                                  relativeToChangelogFile="true" />
-    <!-- <include file="0100_smeta.xml"                                          relativeToChangelogFile="true" />
-    <include file="0070_work.xml"                                           relativeToChangelogFile="true" />
-    <include file="0080_standart_work_resource.xml"                         relativeToChangelogFile="true" />
-    <include file="0090_work_resource.xml"                                  relativeToChangelogFile="true" /> -->
     <include file="0100_smeta.xml"                                          relativeToChangelogFile="true" />
     <include file="0110_standart.xml"                                       relativeToChangelogFile="true" />
     <include file="0160_work_type.xml"                                      relativeToChangelogFile="true" />
@@ -23,8 +18,7 @@
     <include file="0130_work_smeta.xml"                                     relativeToChangelogFile="true" />
     <include file="0140_resource.xml"                                       relativeToChangelogFile="true" />
     <include file="0150_resource_work.xml"                                  relativeToChangelogFile="true" />
-   
-     <include file="0170_templates.xml"                                      relativeToChangelogFile="true" />
+    <include file="0170_templates.xml"                                      relativeToChangelogFile="true" />
 
 </databaseChangeLog>
 

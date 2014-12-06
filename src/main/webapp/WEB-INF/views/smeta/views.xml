@@ -10,5 +10,8 @@
     <definition extends="default" name="smeta/import">
         <put-attribute name="content" value="/WEB-INF/views/smeta/import.jsp"/>
     </definition>
+    <definition extends="default" name="smeta/list">
+        <put-attribute name="content" value="/WEB-INF/views/smeta/list.jsp"/>
+    </definition>
 
 </tiles-definitions>

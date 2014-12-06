@@ -29,6 +29,12 @@ public class SmetaController {
     @Autowired
     private WorkParser workParser;
 
+    @RequestMapping
+    public String showSmetaList(Model model) {
+        model.addAttribute("smetaList", smetaService.getAll());
+        return "smeta/list";
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showAddForm(Model model) {
         SmetaForm smetaForm = new SmetaForm();

@@ -73,4 +73,9 @@ public class SmetaServiceImpl implements SmetaService {
         workSmetaDao.create(workSmeta);
     }
 
+    @Override
+    public List<Smeta> getAll() {
+        return smetaDao.findAll();
+    }
+
 }

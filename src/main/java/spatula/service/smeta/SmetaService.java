@@ -1,5 +1,7 @@
 package spatula.service.smeta;
 
+import java.util.List;
+
 import spatula.entity.smeta.Smeta;
 
 public interface SmetaService {
@@ -11,4 +13,6 @@ public interface SmetaService {
     Smeta get(Long id);
 
     Integer getMaxWorkQueueOrZero(Long id);
+
+    List<Smeta> getAll();
 }
