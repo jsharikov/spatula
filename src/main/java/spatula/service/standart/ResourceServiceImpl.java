@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import spatula.dao.standart.ResourceDao;
 import spatula.entity.standart.Resource;
+import spatula.entity.standart.Standart;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
@@ -18,8 +19,15 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void saveWithStandart(Resource resource) {
-        standartService.save(resource.getStandart());
-        resource.setStandartId(resource.getStandart().getId());
+        Standart standart = standartService.getByCode(resource.getStandart().getCode());
+        if (standart == null) {
+            standartService.save(resource.getStandart());
+            resource.setStandartId(resource.getStandart().getId());
+        } else {
+            resource.setStandartId(standart.getId());
+        }
+        //standartService.save(resource.getStandart());
+        //resource.setStandartId(resource.getStandart().getId());
         save(resource);
     }
 

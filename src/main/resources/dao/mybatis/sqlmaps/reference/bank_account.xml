@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="spatula.dao.reference.BankAccountDao">
-
+<!-- 
     <insert id="create" parameterType="bankAccount" keyProperty="id">
         INSERT INTO
             ${db.schema}.bank_account (bank_id, iik)
@@ -43,6 +43,6 @@
             id, bank_id, iik
         FROM
             ${db.schema}.bank_account
-    </select>
+    </select> -->
 
 </mapper>

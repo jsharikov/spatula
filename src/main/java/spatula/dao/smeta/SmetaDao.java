@@ -5,4 +5,5 @@ import spatula.entity.smeta.Smeta;
 
 public interface SmetaDao extends Dao<Smeta, Long> {
 
+    Integer findLastWorkQueue(Long id);
 }

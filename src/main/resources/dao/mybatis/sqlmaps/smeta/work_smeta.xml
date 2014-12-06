@@ -5,13 +5,23 @@
 
 <mapper namespace="spatula.dao.smeta.WorkSmetaDao">
 
-    <!-- <insert id="create" parameterType="workSmeta" keyProperty="id">
+    <resultMap type="workSmeta" id="workSmetaResultMap">
+        <id property="id" column="WORK_SMETA_ID"/>
+        <result property="queue" column="WORK_SMETA_QUEUE"/>
+        <result property="smetaId" column="WORK_SMETA_SMETA_ID"/>
+        <result property="workId" column="WORK_SMETA_WORK_ID"/>
+        <result property="quantity" column="WORK_SMETA_QUANTITY"/>
+        <association property="work" resultMap="spatula.dao.standart.WorkDao.workResultMap"/>
+    </resultMap>
+
+    <insert id="create" parameterType="workSmeta" keyProperty="id">
         INSERT INTO
             ${db.schema}.work_smeta (work_id, smeta_id, quantity, queue)
         VALUES
             (#{workId}, #{smetaId}, #{quantity}, #{queue})
     </insert>
 
+<!-- 
     <select id="read" parameterType="long" resultMap="smeta">
         SELECT
             smeta.id AS SMETA_ID,

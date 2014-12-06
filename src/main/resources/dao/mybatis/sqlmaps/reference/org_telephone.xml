@@ -5,12 +5,12 @@
 
 <mapper namespace="spatula.dao.reference.OrgTelephoneDao">
 
-    <insert id="create" parameterType="orgTelephone" keyProperty="id">
+    <!-- <insert id="create" parameterType="orgTelephone" keyProperty="id">
         INSERT INTO
             ${db.schema}.org_telephone (tel, fax, org_id)
         VALUES
             (#{tel}, #{fax}, #{orgId})
-    </insert>
+    </insert> -->
 
     <select id="read" parameterType="long" resultType="orgTelephone">
         SELECT

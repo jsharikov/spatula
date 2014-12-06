@@ -5,11 +5,11 @@
 
 <mapper namespace="spatula.dao.smeta.SmetaDao">
 
-    <!-- <resultMap id="smeta" type="smeta">
+    <resultMap id="smetaResultMap" type="smeta">
         <id property="id" column="SMETA_ID"/>
-        <collection property="works" ofType="work" resultMap="work"/>
+        <collection property="works" resultMap="spatula.dao.smeta.WorkSmetaDao.workSmetaResultMap"/>
     </resultMap>
-
+<!-- 
     <resultMap id="work" type="work">
         <id property="id" column="WORK_ID"/>
         <result property="quantity" column="WORK_QUANTITY"/>
@@ -46,7 +46,7 @@
         <result property="standartWorkResourceId" column="WORK_RESOURCE_STANDART_WORK_RESOURCE_ID"/>
         <result property="workId" column="WORK_RESOURCE_WORK_ID"/>
         <association property="standartWorkResource" resultMap="standartWorkResource"/>
-    </resultMap>
+    </resultMap> -->
 
     <insert id="create" parameterType="smeta" keyProperty="id">
         INSERT INTO
@@ -54,7 +54,83 @@
         DEFAULT VALUES
     </insert>
 
-    <select id="read" parameterType="long" resultMap="smeta">
+    <select id="read" parameterType="long" resultMap="smetaResultMap">
+        SELECT
+            w.id AS WORK_ID,
+            w.total_cost AS WORK_TOTAL_COST,
+            w.wages_of_workers AS WORK_WAGES_OF_WORKERS,
+            w.oper_machines_cost AS WORK_OPER_MACHINES_COST,
+            w.including_wages_of_machinists AS WORK_INCLUDING_WAGES_OF_MACHINISTS,
+            w.percent AS WORK_PERCENT,
+            w.standart_id AS WORK_STANDART_ID,
+            std.id AS WORK_STANDART_ID,
+            std.code AS WORK_STANDART_CODE,
+            std.unit_id AS WORK_STANDART_UNIT_ID,
+            std.name AS WORK_STANDART_NAME,
+            unit.id AS WORK_UNIT_ID,
+            unit.name AS WORK_UNIT_NAME,
+            work_type.id AS WORK_TYPE_ID,
+            work_type.name AS WORK_TYPE_NAME,
+            resource_work.id AS RESOURCE_WORK_ID,
+            resource_work.work_id AS RESOURCE_WORK_WORK_ID,
+            resource_work.resource_id AS RESOURCE_WORK_RESOURCE_ID,
+            resource_work.quantity AS RESOURCE_WORK_QUANTITY,
+            resource_work.queue AS RESOURCE_WORK_QUEUE,
+            res.id AS RESOURCE_ID,
+            res.cost AS RESOURCE_COST,
+            res.standart_id AS RESOURCE_STANDART_ID,
+            res.wage_of_machinist AS RESOURCE_WAGE_OF_MACHINIST,
+            res.machine AS RESOURCE_MACHINE,
+            rstd.id AS STANDART_ID,
+            rstd.code AS STANDART_CODE,
+            rstd.unit_id AS STANDART_UNIT_ID,
+            rstd.name AS STANDART_NAME,
+            runit.id AS UNIT_ID,
+            runit.name as UNIT_NAME,
+            ws.id AS WORK_SMETA_ID,
+            ws.queue AS WORK_SMETA_QUEUE,
+            ws.work_id AS WORK_SMETA_WORK_ID,
+            ws.smeta_id AS WORK_SMETA_SMETA_ID,
+            ws.quantity AS WORK_SMETA_QUANTITY,
+            s.id AS SMETA_ID
+        FROM
+            ${db.schema}.work w
+        INNER JOIN
+            ${db.schema}.standart std ON std.id = w.standart_id
+        INNER JOIN
+            ${db.schema}.unit unit ON unit.id = std.unit_id
+        LEFT JOIN
+            ${db.schema}.work_type work_type ON work_type.id = w.work_type_id
+        LEFT JOIN
+            ${db.schema}.resource_work resource_work ON resource_work.work_id = w.id
+        LEFT JOIN
+            ${db.schema}.resource res ON res.id = resource_work.resource_id
+        LEFT JOIN
+            ${db.schema}.standart rstd ON rstd.id = res.standart_id
+        LEFT JOIN
+            ${db.schema}.unit runit ON runit.id = rstd.unit_id
+        LEFT JOIN
+            ${db.schema}.work_smeta ws ON ws.work_id = w.id
+        LEFT JOIN
+            ${db.schema}.smeta s ON ws.smeta_id = s.id
+        WHERE
+            s.id = #{id}
+        ORDER BY
+            ws.queue
+    </select>
+
+    <select id="findLastWorkQueue" parameterType="long" resultType="int">
+        SELECT
+            max(ws.queue)
+        FROM
+            ${db.schema}.smeta s
+        INNER JOIN
+            ${db.schema}.work_smeta ws ON ws.smeta_id = s.id
+        WHERE
+            s.id = #{id}
+    </select>
+
+<!--     <select id="read" parameterType="long" resultMap="smeta">
         SELECT
             smeta.id AS SMETA_ID,
             work.id AS WORK_ID,
@@ -92,13 +168,13 @@
             ${db.schema}.standart_work_resource swr ON swr.id = wr.standart_work_resource_id
         WHERE
             smeta.id = #{id}
-    </select>
+    </select> -->
 
     <select id="findAll" resultType="smeta">
         SELECT
             *
         FROM
             ${db.schema}.smeta
-    </select> -->
+    </select>
 
 </mapper>
