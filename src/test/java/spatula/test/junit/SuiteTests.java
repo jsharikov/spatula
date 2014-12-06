@@ -6,10 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-        BankServiceTest.class,
+        //BankServiceTest.class,
         ResourceServiceTest.class,
-        WorkServiceTest.class,
-        WorkParserTest.class
+        //WorkServiceTest.class
 })
 public class SuiteTests {
 

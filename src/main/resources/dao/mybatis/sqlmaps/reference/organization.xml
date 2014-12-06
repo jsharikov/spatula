@@ -4,7 +4,18 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="spatula.dao.reference.OrganizationDao">
-<!-- 
+
+    <resultMap type="organization" id="organization">
+        <id property="id"                   column="ORG_ID"/>
+        <result property="name"             column="ORG_NAME"/>
+        <result property="orgFormId"        column="ORG_FORM_ID"/>
+        <result property="bin"              column="ORG_BIN"/>
+        <result property="address"          column="ORG_ADDRESS"/>
+        <result property="bankAccountId"    column="ORG_BANK_ACCOUNT_ID"/>
+        <result property="email"            column="ORG_EMAIL"/>
+        
+    </resultMap>
+ 
     <insert id="create" parameterType="organization" keyProperty="id">
         INSERT INTO
             ${db.schema}.organizations
@@ -13,16 +24,22 @@
             (#{name}, #{orgFormId}, #{bin}, #{address}, #{bankAccountId}, #{email})
     </insert>
 
-    <select id="read" parameterType="long" resultType="org">
+    <select id="read" parameterType="long" resultMap="organization">
         SELECT
-            id, name, org_form_id, bin, address, bank_account_id, email
+            id as ORG_ID,
+            name as ORG_NAME,
+            org_form_id as ORG_FORM_ID,
+            bin as ORG_BIN,
+            address as ORG_ADDRESS,
+            bank_account_id as ORG_BANK_ACCOUNT_ID,
+            email as ORG_EMAIL
         FROM
             ${db.schema}.organizations
         WHERE
             id = #{id}
     </select>
 
-    <update id="update" parameterType="org">
+    <update id="update" parameterType="organization">
         UPDATE
             ${db.schema}.organizations
         SET
@@ -43,11 +60,17 @@
             id = #{id}
     </delete>
 
-    <select id="findAll" resultType="org">
+    <select id="findAll" resultMap="organization">
         SELECT
-            id, name, org_form_id, bin, address, bank_account_id, email
+            id as ORG_ID,
+            name as ORG_NAME,
+            org_form_id as ORG_FORM_ID,
+            bin as ORG_BIN,
+            address as ORG_ADDRESS,
+            bank_account_id as ORG_BANK_ACCOUNT_ID,
+            email as ORG_EMAIL
         FROM
             ${db.schema}.organizations
-    </select> -->
+    </select>
 
 </mapper>

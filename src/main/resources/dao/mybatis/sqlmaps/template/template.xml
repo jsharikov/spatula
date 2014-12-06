@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spatula.dao.template.TemplateDao">
+
+    <resultMap type="template" id="template">
+        <id property="id"               column="TEMP_ID"/>
+        <result property="name"         column="TEMP_NAME"/>
+        <result property="fileName"     column="TEMP_FILE_NAME"/>
+        <result property="content"      column="TEMP_CONTENT"/>
+        <result property="mimeType"     column="TEMP_MIME_TYPE"/>
+    </resultMap>
+
+    <insert id="create" parameterType="template" keyProperty="id">
+        INSERT INTO
+            ${db.schema}.templates (name, file_name, content, mime_type)
+        VALUES
+            (#{name}, #{fileName}, #{content}, #{mimeType})
+    </insert>
+
+    <select id="read" parameterType="long" resultMap="template">
+        SELECT
+            id as TEMP_ID,
+            name as TEMP_NAME,
+            file_name as TEMP_FILE_NAME,
+            content as TEMP_CONTENT,
+            mime_type as TEMP_MIME_TYPE
+        FROM
+            ${db.schema}.templates
+        WHERE
+            id = #{value}
+    </select>
+
+    <update id="update" parameterType="template">
+        UPDATE
+            ${db.schema}.templates
+        SET
+            name = #{name},
+            file_name = #{fileName},
+            content = #{content},
+            mime_type = #{mimeType}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+            ${db.schema}.templates
+        WHERE
+            id = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="template">
+        SELECT
+            id as TEMP_ID,
+            name as TEMP_NAME,
+            file_name as TEMP_FILE_NAME,
+            content as TEMP_CONTENT,
+            mime_type as TEMP_MIME_TYPE
+        FROM
+            ${db.schema}.templates
+    </select>
+
+</mapper>
