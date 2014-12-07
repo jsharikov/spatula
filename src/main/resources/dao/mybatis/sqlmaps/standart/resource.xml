@@ -31,11 +31,15 @@
             std.id AS STANDART_ID,
             std.code AS STANDART_CODE,
             std.name AS STANDART_NAME,
-            std.unit_id AS STANDART_UNIT_ID
+            std.unit_id AS STANDART_UNIT_ID,
+            unit.id AS UNIT_ID,
+            unit.name as UNIT_NAME
         FROM
             ${db.schema}.resource res
         INNER JOIN
             ${db.schema}.standart std ON std.id = res.standart_id
+         INNER JOIN
+            ${db.schema}.unit unit ON unit.id = std.unit_id
         WHERE
             res.id = #{id}
     </select>
@@ -45,7 +49,7 @@
             ${db.schema}.resource
         SET
             cost = #{cost},
-            standart_id = #{standartId}
+            standart_id = #{standartId},
             wage_of_machinist = #{wageOfMachinist},
             machine = #{machine}
         WHERE
@@ -62,11 +66,15 @@
             std.id AS STANDART_ID,
             std.code AS STANDART_CODE,
             std.name AS STANDART_NAME,
-            std.unit_id AS STANDART_UNIT_ID
+            std.unit_id AS STANDART_UNIT_ID,
+            unit.id AS UNIT_ID,
+            unit.name as UNIT_NAME
         FROM
             ${db.schema}.resource res
         INNER JOIN
             ${db.schema}.standart std ON std.id = res.standart_id
+        INNER JOIN
+            ${db.schema}.unit unit ON unit.id = std.unit_id
     </select>
 
     <select id="findByStandartId" parameterType="long" resultMap="resourceResultMap">

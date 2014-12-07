@@ -47,6 +47,10 @@
             <column name="id">10</column>
             <column name="name">1000шт</column>
         </insert>
+        <insert tableName="unit" schemaName="${db.schema}">
+            <column name="id">11</column>
+            <column name="name">отверст.</column>
+        </insert>
         <rollback>
             <delete tableName="unit" schemaName="${db.schema}"/>
         </rollback>

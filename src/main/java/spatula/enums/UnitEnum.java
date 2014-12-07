@@ -16,7 +16,8 @@ public enum UnitEnum {
     PC(7L, "шт"),
     T(8L, "т;1т"),
     M(9L, "м"),
-    PC1000(10L, "1000шт");
+    PC1000(10L, "1000шт"),
+    HOLE(11L, "отверст.");
 
     private Long id;
     private String name;

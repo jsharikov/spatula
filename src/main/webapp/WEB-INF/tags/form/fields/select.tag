@@ -8,13 +8,14 @@
 <%@attribute name="items" required="true" type="java.util.Collection" %>
 <%@attribute name="itemLabel" required="true" type="java.lang.String" %>
 <%@attribute name="itemValue" required="true" type="java.lang.String" %>
+<%@attribute name="disabled" required="false" type="java.lang.Boolean" %>
 
 <spring:bind path="${path}">
     <div class="form-group ${status.error ? 'has-error' : '' }">
         <c:if test="${not empty label }">
             <form:label class="control-label" path="${path}">${label}</form:label>
         </c:if>
-        <form:select class="form-control" path="${path}">
+        <form:select class="form-control" path="${path}" disabled="${disabled}">
             <form:option value=""/>
             <form:options items="${items}" itemLabel="${itemLabel}" itemValue="${itemValue}"/>
         </form:select>

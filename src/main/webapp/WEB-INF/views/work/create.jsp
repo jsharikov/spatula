@@ -32,6 +32,10 @@ $(document).ready(function(){
     <field:select label="Тип работы" path="workTypeId" items="${workTypes}" itemLabel="name" itemValue="id"/>
     
     <field:input label="Накладные расходы (%)" path="percent"/>
+    <field:input label="ЗП рабочих-строителей" path="wagesOfWorkers"/>
+    <field:input label="Экспл. машин" path="operMachinesCost"/>
+    <field:input label="в т.ч. ЗП машинистов " path="includingWagesOfMachinists"/>
+    <field:input label="Стоимость" path="totalCost"/>
     <table class="table">
         <thead>
             <tr>
@@ -51,7 +55,9 @@ $(document).ready(function(){
                         <field:hidden path="resources[${status.index}].resourceId"/>
                         <field:select items="${standarts}" itemLabel="name" path="resources[${status.index}].resource.standartId" itemValue="id"/>
                     </td>
-                    <td><field:input path="resources[${status.index}].resource.standart.unitId" readonly="true"/></td>
+                    <td>
+                        <field:select items="${units}" itemLabel="name" path="resources[${status.index}].resource.standart.unitId" itemValue="id" disabled="true"/>
+                    </td>
                     <td><field:input path="resources[${status.index}].quantity"/></td>
                     <td><field:input path="resources[${status.index}].resource.cost" readonly="${work.resources[status.index].resource.machine != null && work.resources[status.index].resource.machine }"/></td>
                     <td>
@@ -68,10 +74,7 @@ $(document).ready(function(){
     <div>
         <button id="addResourceBtn" class="btn btn-default" type="submit" name="sbmt" value="ADD_RESOURCE">Добавить ресурс</button>
     </div>
-    <field:input label="ЗП рабочих-строителей" path="wagesOfWorkers"/>
-    <field:input label="Экспл. машин" path="operMachinesCost"/>
-    <field:input label="в т.ч. ЗП машинистов " path="includingWagesOfMachinists"/>
-    <field:input label="Стоимость" path="totalCost"/>
+    <br/>
     <%-- <div class="col-md-12">
         <div class="col-md-3">
             <field:input label="Стоимость" path="totalCost"/>

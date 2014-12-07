@@ -82,6 +82,7 @@ public class WorkController {
                             Resource resource = new Resource();
                             resource.setStandart(standartService.get(standartId));
                             resource.setStandartId(standartId);
+                            resource.setCost(resourceWork.getResource().getCost());
                             resourceWork.setResource(resource);
                         } else {
                             resourceWork.setResource(resourceService.getByStandartId(standartId));

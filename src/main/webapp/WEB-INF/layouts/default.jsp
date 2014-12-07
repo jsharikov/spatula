@@ -36,7 +36,7 @@
                     <div class="box col-md-12">
                         <div class="box-inner">
                         <div class="box-content row">
-                        <div class="col-lg-7 col-md-12">
+                        <div class="col-lg-12 col-md-12">
                 <tiles:insertAttribute name="content"/>
                 </div>
                 </div>

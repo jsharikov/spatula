@@ -10,13 +10,13 @@
 <table class="table" border="1">
     <thead>
         <tr>
-            <th>Шифр</th>
-            <th>Наименование</th>
-            <th>Ед. изм.</th>
-            <th>Стоимость</th>
-            <th>Тип ресурса</th>
-            <th>Зарплата машиниста</th>
-            <th></th>
+            <th class="col-md-1">Шифр</th>
+            <th class="col-md-5">Наименование</th>
+            <th class="col-md-1">Ед. изм.</th>
+            <th class="col-md-1">Стоимость</th>
+            <th class="col-md-1">Тип ресурса</th>
+            <th class="col-md-1">Зарплата машиниста</th>
+            <th class="col-md-2"></th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
             <tr>
                 <td>${resource.standart.code}</td>
                 <td>${resource.standart.name}</td>
-                <td>${resource.standart.unitId}</td>
+                <td>${resource.standart.unit.name}</td>
                 <td><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${resource.cost}"/></td>
                 <td>
                     <c:if test="${resource.machine}">
