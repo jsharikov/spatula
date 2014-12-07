@@ -24,7 +24,7 @@
     <include file="0140_resource.xml"                                       relativeToChangelogFile="true" />
     <include file="0150_resource_work.xml"                                  relativeToChangelogFile="true" />
    
-     <include file="0170_templates.xml"                                      relativeToChangelogFile="true" />
-
+    <include file="0170_templates.xml"                                     relativeToChangelogFile="true" />
+    <include file="0180_contract_temp.xml"                                     relativeToChangelogFile="true" />
 </databaseChangeLog>
 

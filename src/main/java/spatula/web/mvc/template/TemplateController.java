@@ -19,7 +19,7 @@ import spatula.entity.template.Template;
 import spatula.service.template.TemplateService;
 
 @Controller
-@RequestMapping("/documents/template")
+@RequestMapping("/documents/node")
 public class TemplateController {
 	
 	@Autowired
@@ -29,20 +29,20 @@ public class TemplateController {
     public String showTemplate(Model model) {
         List<Template> templates = templateService.getAll();
         model.addAttribute("templates", templates);
-        return "template/list";
+        return "node/list";
     }
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
     public String addTemplate(Model model) {
 		model.addAttribute("templateForm", new TemplateForm());
-        return "template/create";
+        return "node/create";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveResource(@ModelAttribute(value = "templateForm") TemplateForm templateForm, BindingResult result,
             Model model) {
 		templateService.save(convertTemplateForm(templateForm));
-        return "redirect:/documents/template";
+        return "redirect:/documents/node";
     }
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -50,7 +50,7 @@ public class TemplateController {
 		TemplateForm templateForm = new TemplateForm();
 		templateForm.setTemplate(templateService.get(templateId));
         model.addAttribute("templateForm", templateForm);
-        return "template/update";
+        return "node/update";
     }
 
 	private Template convertTemplateForm(TemplateForm templateForm) {
@@ -71,6 +71,6 @@ public class TemplateController {
 		File templateFile = File.createTempFile("temp", ".docx");
         FileCopyUtils.copy(template.getContent(), templateFile);
 		OOUtils.open(templateFile);
-        return "redirect:/documents/template";
+        return "redirect:/documents/node";
     }
 }

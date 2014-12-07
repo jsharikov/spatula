@@ -3,10 +3,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<h4>Шаблоны</h4>
+<h4>Разделы</h4>
 <hr class="title">
 <div class="toolbar">
-	<a href='<c:url value="/documents/template/create"/>'
+	<a href='<c:url value="/documents/node/create"/>'
 		class="btn btn-default">Добавить</a>
 </div>
 <c:if test="${not empty templates}">
@@ -14,8 +14,8 @@
 		<thead>
 			<tr>
 				<th>№</th>
-				<th>Название шаблона</th>
-				<th>Шаблон</th>
+				<th>Название раздела</th>
+				<th>Шаблон раздела</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -26,11 +26,11 @@
 							value="${status.index + 1}" /></td>
 					<td>${template.name}</td>
 					<td>
-					    <c:url value="/documents/template/show/${template.id}" var="urlOpen" />
+					    <c:url value="/documents/node/show/${template.id}" var="urlOpen" />
 					    <a href="${urlOpen}">${template.fileName}</a>
 					</td>
 					<td class="center">
-                    <c:url var="editUrl" value="/documents/template/${template.id}"/>
+                    <c:url var="editUrl" value="/documents/node/${template.id}"/>
                     <a class="btn btn-info btn-sm" href="${editUrl}">
                         <i class="glyphicon glyphicon-edit icon-white"></i>
                         Редактировать

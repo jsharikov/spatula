@@ -12,7 +12,7 @@
 
 <form:form modelAttribute="contractForm" path="/documents/contract/save" cancelUrl="/documents/contract">
     <field:input label="Наименование" path="contractName"/>
-    <field:select label="Шаблон" path="templateId" items="${templates}" itemLabel="name" itemValue="id"/>
+    <field:select label="Шаблон" path="templateId" items="${contractTemp}" itemLabel="name" itemValue="id"/>
 </form:form>
 
 

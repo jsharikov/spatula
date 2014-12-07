@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+  logicalFilePath="table/0180_contract_temp.xml">
+
+    <changeSet id="180" author="Anastasiya">
+        <createTable tableName="contract_temp" remarks="Шаблоны для формирования договоров" schemaName="${db.schema}">
+            <column name="id" type="bigint" autoIncrement="true" remarks="Идентификатор шаблона">
+                <constraints primaryKey="true" primaryKeyName="pk_contract_temp" nullable="false"/>
+            </column>
+            <column name="name" type="varchar" remarks="Наименование шаблона">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="bytea" remarks="Содержимое">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mime_type" type="varchar" remarks="Тип файла шаблона">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="contract_temp" schemaName="${db.schema}"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

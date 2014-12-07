@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import spatula.entity.contract.Contract;
+import spatula.entity.contract.ContractTemplate;
 import spatula.entity.reference.Organization;
-import spatula.entity.template.Template;
+import spatula.service.contract.ContractTemplateService;
 import spatula.service.reference.OrganizationService;
-import spatula.service.template.TemplateService;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
@@ -37,15 +37,15 @@ public class ContractController {
 	private static final Long ORG_ID = new Long(-1);
 
 	@Autowired
-	private TemplateService templateService;
+	private ContractTemplateService contractTemplateService;
 
 	@Autowired
 	private OrganizationService organizationService;
 
 	// список всех шаблонов
-	@ModelAttribute("templates")
-	public List<Template> templates() {
-		return templateService.getAll();
+	@ModelAttribute("contractTemp")
+	public List<ContractTemplate> templates() {
+		return contractTemplateService.getAll();
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class ContractController {
 	private Contract generateContract(ContractForm contractForm) {
 		File resultFile = null;
 		try {
-			Template template = templateService.get(contractForm.getTemplateId());
+			ContractTemplate template = contractTemplateService.get(contractForm.getTemplateId());
 			File templateFile = File.createTempFile("template", ".docx");
 	        FileCopyUtils.copy(template.getContent(), templateFile);
 

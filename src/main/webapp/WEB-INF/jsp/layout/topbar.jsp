@@ -40,8 +40,10 @@
                     <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> Документы <span
                             class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <c:url var="templateUrl" value="/documents/template"/>
-                        <li><a href="${templateUrl}">Шаблоны</a></li>
+                        <c:url var="templateUrl" value="/documents/node"/>
+                        <li><a href="${templateUrl}">Разделы</a></li>
+                        <c:url var="contractUrl" value="/documents/contract_template"/>
+                        <li><a href="${contractUrl}">Шаблоны договоров</a></li>
                         <c:url var="contractUrl" value="/documents/contract"/>
                         <li><a href="${contractUrl}">Договора</a></li>
                     </ul>

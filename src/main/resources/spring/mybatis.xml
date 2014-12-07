@@ -11,8 +11,9 @@
 
     <typeAliases>
         <typeAlias type="org.springframework.security.core.authority.SimpleGrantedAuthority" alias="simpleGrantedAuthority"/>
-        <typeAlias type="spatula.entity.reference.Unit"         alias="unit" />
-        <typeAlias type="spatula.entity.template.Template"      alias="template" />
+        <typeAlias type="spatula.entity.reference.Unit"                 alias="unit" />
+        <typeAlias type="spatula.entity.template.Template"              alias="template" />
+        <typeAlias type="spatula.entity.contract.ContractTemplate"      alias="contractTemp" />
         <package   name="spatula.entity"/>
     </typeAliases>
 
