@@ -30,6 +30,8 @@
                         <li><a href="${resourcesUrl}">Нормативная база ресурсов</a></li>
                         <c:url var="worksUrl" value="/standart/work"/>
                         <li><a href="${worksUrl}">Нормативная база работ</a></li>
+                        <c:url var="smetaListUrl" value="/smeta"/>
+                        <li><a href="${smetaListUrl}">Сметы</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Separated link</a></li>
                         <li class="divider"></li>

@@ -2,6 +2,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib tagdir="/WEB-INF/tags/form/fields" prefix="field"%>
+<%@ taglib tagdir="/WEB-INF/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="springform" %>
 
 <style>
 td, th {
@@ -20,14 +24,10 @@ th {
 }
 </style>
 
-<!-- <script>
-$(document).ready(function() {
-    $('#example').dataTable();
-} );
-</script> -->
-<form action='<c:url value="/smeta/${smeta.id}/work/new"/>'>
-    <button class="btn btn-default">Добавить новую работу</button>
-</form>
+<h4>Создание сметы</h4>
+<hr class="title">
+<form:form modelAttribute="smetaForm" path="/smeta/save" cancelUrl="/smeta">
+    <springform:hidden path="smeta.id"/>
 <table border="1" id="example" class="smeta">
 <thead>
     <tr>
@@ -61,37 +61,38 @@ $(document).ready(function() {
     </tr>
     </thead>
     <tbody>
-<c:forEach var="work" items="${smeta.works}" varStatus="status">
+<c:forEach var="workSmeta" items="${smetaForm.smeta.works}" varStatus="status">
     <tr>
-        <td rowspan="3" class="queue">${status.index + 1}</td>
-        <td rowspan="3">${work.standartWork.code}</td>
-        <td rowspan="2" style="text-align: left;">${work.standartWork.name}</td>
-        <td rowspan="3"><%-- <fmt:formatNumber value="${work.quantity}" minFractionDigits="2"/> --%></td>
-        <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${work.standart.totalCost}" minFractionDigits="2"/> --%></td>
-        <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${work.standart.operMachinesCost}" minFractionDigits="2"/> --%></td>
-        <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${workSmeta.quantity * workSmeta.work.standart.totalCost}" minFractionDigits="2"/> --%></td>
-        <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${workSmeta.quantity * workSmeta.work.standartWork.operMachinesCost}" minFractionDigits="2"/> --%></td>
-        <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${workSmeta.quantity * (workSmeta.work.standartWork.wagesOfWorkers + workSmeta.work.standartWork.includingWagesOfMachinists) * workSmeta.work.standartWork.percent / 100}" minFractionDigits="2"/> --%></td>
+        <td rowspan="3" class="queue">${workSmeta.queue}</td>
+        <td rowspan="3">${workSmeta.work.standart.code}</td>
+        <td rowspan="2" style="text-align: left;">${workSmeta.work.standart.name}</td>
+        <td rowspan="3"><fmt:formatNumber value="${workSmeta.quantity}" minFractionDigits="2"/></td>
+        <td rowspan="2" class="number"><fmt:formatNumber value="${workSmeta.work.totalCost}" minFractionDigits="2"/></td>
+        <td rowspan="2" class="number"><fmt:formatNumber value="${workSmeta.work.operMachinesCost}" minFractionDigits="2"/></td>
+        <td rowspan="2" class="number"><fmt:formatNumber value="${workSmeta.quantity * workSmeta.work.totalCost}" minFractionDigits="2"/></td>
+        <td rowspan="2" class="number"><fmt:formatNumber value="${workSmeta.quantity * workSmeta.work.operMachinesCost}" minFractionDigits="2"/></td>
+        <td rowspan="2" class="number"><fmt:formatNumber value="${workSmeta.quantity * (workSmeta.work.wagesOfWorkers + workSmeta.work.includingWagesOfMachinists) * workSmeta.work.percent / 100}" minFractionDigits="2"/></td>
         <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${work.workersQuantity}" minFractionDigits="2"/> --%></td>
         <td rowspan="2" class="number"><%-- <fmt:formatNumber value="${work.workersTotalQuantity}" minFractionDigits="2"/> --%></td>
     </tr>
     <tr>
     </tr>
     <tr>
-        <td class="number"><%-- ${work.standartWork.unitId} --%></td>
-        <td class="number"><%-- <fmt:formatNumber value="${work.standartWork.wagesOfWorkers}" minFractionDigits="2"/> --%></td>
-        <td class="number"><%-- <fmt:formatNumber value="${work.standartWork.includingWagesOfMachinists}" minFractionDigits="2"/> --%></td>
-        <td class="number"><%-- <fmt:formatNumber value="${work.quantity * work.standartWork.wagesOfWorkers}" minFractionDigits="2"/> --%></td>
-        <td class="number"><%-- <fmt:formatNumber value="${work.quantity * work.standartWork.includingWagesOfMachinists}" minFractionDigits="2"/> --%></td>
-        <td class="number"><%-- ${work.standartWork.percent}% --%></td>
+        <td class="number">${workSmeta.work.standart.unit.name}</td>
+        <td class="number"><fmt:formatNumber value="${workSmeta.work.wagesOfWorkers}" minFractionDigits="2"/></td>
+        <td class="number"><fmt:formatNumber value="${workSmeta.work.includingWagesOfMachinists}" minFractionDigits="2"/></td>
+        <td class="number"><fmt:formatNumber value="${workSmeta.quantity * workSmeta.work.wagesOfWorkers}" minFractionDigits="2"/></td>
+        <td class="number"><fmt:formatNumber value="${workSmeta.quantity * workSmeta.work.includingWagesOfMachinists}" minFractionDigits="2"/></td>
+        <td class="number">${workSmeta.work.percent}%</td>
         <td class="number"><%-- <fmt:formatNumber  value="${work.machinistsQuantity}" minFractionDigits="2"/> --%></td>
         <td class="number"><%-- <fmt:formatNumber value="${work.machinistsTotalQuantity}" minFractionDigits="2"/> --%></td>
     </tr>
-    <%-- <tr>
-        <td colspan="10">
+    <tr>
+        <td colspan="11">
             <table border="1" width="100%">
                 <thead>
                     <tr>
+                        <td rowspan="2">№ п/п</td>
                         <td rowspan="2">Код ресурса</td>
                         <td rowspan="2">Наименование ресурса</td>
                         <td rowspan="2">Измеритель</td>
@@ -105,23 +106,30 @@ $(document).ready(function() {
                         <td>всего</td>
                     </tr>
                 </thead>
-                <c:forEach var="resource" items="${work.resources}">
+                <c:forEach var="resourceWork" items="${workSmeta.work.resources}">
                     <tr>
-                        <td>${resource.standartWorkResource.code}</td>
-                        <td>${resource.standartWorkResource.name}</td>
-                        <td>${resource.standartWorkResource.unitId}</td>
+                        <td>${workSmeta.queue}.${resourceWork.queue}</td>
+                        <td>${resourceWork.resource.standart.code}</td>
+                        <td>${resourceWork.resource.standart.name}</td>
+                        <td>${resourceWork.resource.standart.unit.name}</td>
                         <td>
-                            <c:set var="resQuantity" value="${resource.quantity}"/>
+                            <c:set var="resQuantity" value="${resourceWork.quantity}"/>
                             <fmt:formatNumber value="${resQuantity}" minFractionDigits="2"/>
                         </td>
-                        <td><fmt:formatNumber value="${resource.quantity * work.quantity}" minFractionDigits="2"/></td>
-                        <td><fmt:formatNumber value="${resource.cost}" minFractionDigits="2"/></td>
-                        <td><fmt:formatNumber value="${resource.totalCost}" minFractionDigits="2"/></td>
+                        <td><fmt:formatNumber value="${resourceWork.quantity * workSmeta.quantity}" minFractionDigits="2"/></td>
+                        <td><fmt:formatNumber value="${resourceWork.resource.cost}" minFractionDigits="2"/></td>
+                        <td><fmt:formatNumber value="${resourceWork.resource.cost * resourceWork.quantity * workSmeta.quantity}" minFractionDigits="2"/></td>
                     </tr>
                 </c:forEach>
             </table>
         </td>
-    </tr> --%>
+    </tr>
 </c:forEach>
 </tbody>
 </table>
+
+    <field:select label="Работа" path="workSmeta.workId" items="${works}" itemLabel="standart.name" itemValue="id"/>
+    <field:input label="Количество" path="workSmeta.quantity"/>
+</form:form>
+
+

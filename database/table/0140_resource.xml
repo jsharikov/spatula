@@ -12,7 +12,7 @@
                 <constraints primaryKey="true" primaryKeyName="resource_pkey" nullable="false"/>
             </column>
             <column name="cost" type="numeric(32,16)" remarks="Стоимость">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="standart_id" type="bigint" remarks="Идентификатор норматива">
                 <constraints nullable="false"/>

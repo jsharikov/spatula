@@ -1,7 +1,6 @@
-/*package spatula.parser;
+package spatula.parser;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,43 +15,44 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import spatula.entity.reference.StandartWork;
-import spatula.entity.reference.StandartWorkResource;
-import spatula.entity.reference.Work;
-import spatula.entity.reference.WorkResource;
+import spatula.entity.smeta.WorkSmeta;
+import spatula.entity.standart.Resource;
+import spatula.entity.standart.ResourceWork;
+import spatula.entity.standart.Standart;
+import spatula.entity.standart.Work;
 import spatula.enums.UnitEnum;
-
+@Component
 public final class WorkParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkParser.class);
 
-    public static List<Work> parse() {
-        File file = new File("D:\\k1580.xls");
-        List<Work> works = new ArrayList<>();
+    public static List<WorkSmeta> parse(byte [] file) {
+        List<WorkSmeta> workSmetaList = new ArrayList<>();
         InputStream is = null;
         try {
-            is = new FileInputStream(file);
+            is = new ByteArrayInputStream(file);
             HSSFWorkbook wb = new HSSFWorkbook(is);
             Sheet sheet = wb.getSheetAt(0);
             Iterator<Row> it = sheet.iterator();
             boolean foundFirstRowWithWork = false;
             Integer queueWork = null;
-            Work work = null;
+            WorkSmeta workSmeta = null;
             while (it.hasNext()) {
                 Row row = it.next();
                 Cell cell0 = row.getCell(0);
                 Integer value = parseQueueWork(cell0);
                 if (value != null) {
                     queueWork = value;
-                    work = parseWork(it, row);
-                    works.add(work);
+                    workSmeta = parseWorkSmeta(it, row);
+                    workSmetaList.add(workSmeta);
                     if (!foundFirstRowWithWork) {
                         foundFirstRowWithWork = true;
                     }
                 } else if (foundFirstRowWithWork && isParseQueueWorkResource(cell0, queueWork)) {
-                    WorkResource workResource = parseWorkResource(row);
-                    work.getResources().add(workResource);
+                    ResourceWork resourceWork = parseResourceWork(row);
+                    workSmeta.getWork().getResources().add(resourceWork);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -60,7 +60,7 @@ public final class WorkParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return works;
+        return workSmetaList;
     }
 
     private static boolean isParseQueueWorkResource(Cell cell, Integer queueWork) {
@@ -89,34 +89,35 @@ public final class WorkParser {
         return null;
     }
 
-    private static Work parseWork(Iterator<Row> it, Row currRow) {
-        Work work = new Work();
-        work.setStandartWork(new StandartWork());
-        work.setResources(new ArrayList<WorkResource>());
-        processFirstRowWithWork(currRow, work);
-        processSecondRowWithWork(it.next(), work);
-        processThirdRowWithWork(it.next(), work);
-        return work;
+    private static WorkSmeta parseWorkSmeta(Iterator<Row> it, Row currRow) {
+        WorkSmeta workSmeta = new WorkSmeta();
+        workSmeta.setWork(new Work());
+        workSmeta.getWork().setStandart(new Standart());
+        workSmeta.getWork().setResources(new ArrayList<ResourceWork>());
+        processFirstRowWithWork(currRow, workSmeta);
+        processSecondRowWithWork(it.next(), workSmeta.getWork());
+        processThirdRowWithWork(it.next(), workSmeta.getWork());
+        return workSmeta;
     }
 
-    private static void processFirstRowWithWork(Row row, Work work) {
+    private static void processFirstRowWithWork(Row row, WorkSmeta workSmeta) {
 
-        work.getStandartWork().setCode(row.getCell(1).getStringCellValue());
-        work.getStandartWork().setName(row.getCell(2).getStringCellValue());
-        work.setQuantity(getNumericCellValueOrNull(row.getCell(3)));
-        work.getStandartWork().setTotalCost(getNumericCellValueOrNull(row.getCell(4)));
-        work.getStandartWork().setOperMachinesCost(getNumericCellValueOrNull(row.getCell(5)));
+        workSmeta.getWork().getStandart().setCode(row.getCell(1).getStringCellValue());
+        workSmeta.getWork().getStandart().setName(row.getCell(2).getStringCellValue());
+        workSmeta.setQuantity(getNumericCellValueOrNull(row.getCell(3)));
+        workSmeta.getWork().setTotalCost(getNumericCellValueOrNull(row.getCell(4)));
+        workSmeta.getWork().setOperMachinesCost(getNumericCellValueOrNull(row.getCell(5)));
 
-        CostWork totalCost = work.getTotalCost();
+        /*CostWork totalCost = work.getTotalCost();
         totalCost.setTotal(getNumericCellValueOrNull(row.getCell(6)));
-        totalCost.setOperMachines(getNumericCellValueOrNull(row.getCell(7)));
+        totalCost.setOperMachines(getNumericCellValueOrNull(row.getCell(7)));*/
 
-        Overhead overhead = work.getOverhead();
-        overhead.setValue(getNumericCellValueOrNull(row.getCell(8)));
+        /*Overhead overhead = work.getOverhead();
+        overhead.setValue(getNumericCellValueOrNull(row.getCell(8)));*/
 
-        LaborCost workers = work.getWorkers();
+        /*LaborCost workers = work.getWorkers();
         workers.setItem(getNumericCellValueOrNull(row.getCell(9)));
-        workers.setTotal(getNumericCellValueOrNull(row.getCell(10)));
+        workers.setTotal(getNumericCellValueOrNull(row.getCell(10)));*/
     }
 
     private static BigDecimal getNumericCellValueOrNull(Cell cell) {
@@ -135,11 +136,11 @@ public final class WorkParser {
 
     private static void processSecondRowWithWork(Row row, Work work) {
 
-        work.getStandartWork().setWagesOfWorkers(getNumericCellValueOrNull(row.getCell(4)));
-        work.getStandartWork().setIncludingWagesOfMachinists(getNumericCellValueOrNull(row.getCell(5)));
-        work.getStandartWork().setPercent(getIntegerCellValueOrNull(row.getCell(8)));
+        work.setWagesOfWorkers(getNumericCellValueOrNull(row.getCell(4)));
+        work.setIncludingWagesOfMachinists(getNumericCellValueOrNull(row.getCell(5)));
+        work.setPercent(getIntegerCellValueOrNull(row.getCell(8)));
 
-        CostWork totalCost = work.getTotalCost();
+        /*CostWork totalCost = work.getTotalCost();
         totalCost.setWagesOfWorkers(getNumericCellValueOrNull(row.getCell(6)));
         totalCost.setIncludingWagesOfMachinists(getNumericCellValueOrNull(row.getCell(7)));
 
@@ -148,33 +149,33 @@ public final class WorkParser {
 
         LaborCost machinists = work.getMachinists();
         machinists.setItem(getNumericCellValueOrNull(row.getCell(9)));
-        machinists.setTotal(getNumericCellValueOrNull(row.getCell(10)));
+        machinists.setTotal(getNumericCellValueOrNull(row.getCell(10)));*/
     }
 
     private static void processThirdRowWithWork(Row row, Work work) {
         UnitEnum unitEnum = UnitEnum.getUnitEnumByName(row.getCell(2).getStringCellValue());
         if (unitEnum != null) {
-            work.getStandartWork().setUnitId(unitEnum.getId());
+            work.getStandart().setUnitId(unitEnum.getId());
         }
     }
 
-    private static WorkResource parseWorkResource(Row row) {
-        WorkResource workResource = new WorkResource();
+    private static ResourceWork parseResourceWork(Row row) {
+        ResourceWork resourceWork = new ResourceWork();
 
-        StandartWorkResource standartWorkResource = new StandartWorkResource();
-        standartWorkResource.setCode(row.getCell(1).getStringCellValue());
-        standartWorkResource.setName(row.getCell(2).getStringCellValue());
+        resourceWork.setResource(new Resource());
+        resourceWork.getResource().setStandart(new Standart());
+        resourceWork.getResource().getStandart().setCode(row.getCell(1).getStringCellValue());
+        resourceWork.getResource().getStandart().setName(row.getCell(2).getStringCellValue());
         UnitEnum unitEnum = UnitEnum.getUnitEnumByName(row.getCell(3).getStringCellValue());
         if (unitEnum != null) {
-            standartWorkResource.setUnitId(unitEnum.getId());
+            resourceWork.getResource().getStandart().setUnitId(unitEnum.getId());
         }
-        workResource.setStandartWorkResource(standartWorkResource);
 
-        workResource.setQuantity(getNumericCellValueOrNull(row.getCell(4)));
-        workResource.setCost(getNumericCellValueOrNull(row.getCell(6)));
-        workResource.setTotalCost(getNumericCellValueOrNull(row.getCell(7)));
+        resourceWork.setQuantity(getNumericCellValueOrNull(row.getCell(4)));
+        resourceWork.getResource().setCost(getNumericCellValueOrNull(row.getCell(6)));
+        //resourceWork.getResource().setTotalCost(getNumericCellValueOrNull(row.getCell(7)));
 
-        return workResource;
+        return resourceWork;
     }
 
     private WorkParser() {
@@ -182,4 +183,3 @@ public final class WorkParser {
     }
 
 }
-*/
