@@ -2,6 +2,8 @@ package spatula.entity.smeta;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
 import spatula.entity.QueueEntity;
 import spatula.entity.standart.Work;
 
@@ -9,8 +11,10 @@ public class WorkSmeta extends QueueEntity {
 
     private static final long serialVersionUID = -7749309705832303286L;
 
+    @NotNull
     private Long workId;
     private Long smetaId;
+    @NotNull
     private BigDecimal quantity;
     private Work work;
 

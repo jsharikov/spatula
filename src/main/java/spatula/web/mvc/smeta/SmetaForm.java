@@ -1,5 +1,7 @@
 package spatula.web.mvc.smeta;
 
+import javax.validation.Valid;
+
 import spatula.entity.smeta.Smeta;
 import spatula.entity.smeta.WorkSmeta;
 
@@ -7,6 +9,7 @@ public class SmetaForm {
 
     private Smeta smeta = new Smeta();
 
+    @Valid
     private WorkSmeta workSmeta;
 
     public Smeta getSmeta() {

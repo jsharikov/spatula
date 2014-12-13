@@ -3,6 +3,8 @@ package spatula.web.mvc.smeta;
 import java.io.IOException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,8 +55,12 @@ public class SmetaController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveSmeta(SmetaForm smetaForm, BindingResult result, Model model) {
+    public String saveSmeta(@Valid SmetaForm smetaForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            if (smetaForm.getSmeta().getId() != null) {
+                smetaForm.setSmeta(smetaService.get(smetaForm.getSmeta().getId()));
+            }
+            model.addAttribute("works", workService.getAll());
             return "smeta/create";
         }
         smetaForm.getSmeta().getWorks().add(smetaForm.getWorkSmeta());

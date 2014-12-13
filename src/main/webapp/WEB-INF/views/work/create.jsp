@@ -39,12 +39,12 @@ $(document).ready(function(){
     <table class="table">
         <thead>
             <tr>
-                <th>Шифр</th>
-                <th>Наименование</th>
-                <th>Ед. изм.</th>
-                <th>Количество</th>
-                <th>Стоимость</th>
-                <th></th>
+                <th class="col-md-2">Шифр</th>
+                <th class="col-md-5">Наименование</th>
+                <th class="col-md-2">Ед. изм.</th>
+                <th class="col-md-1">Количество</th>
+                <th class="col-md-1">Стоимость</th>
+                <th class="col-md-1"></th>
             </tr>
         </thead>
         <c:forEach var="resourceWork" items="${work.resources}" varStatus="status">

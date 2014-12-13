@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import spatula.dao.standart.ResourceDao;
 import spatula.entity.standart.Resource;
 import spatula.entity.standart.Standart;
+import spatula.enums.StandartEnum;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
@@ -24,11 +25,18 @@ public class ResourceServiceImpl implements ResourceService {
             standartService.save(resource.getStandart());
             resource.setStandartId(resource.getStandart().getId());
         } else {
-            resource.setStandartId(standart.getId());
+            
+            if (!StandartEnum.exclusion(standart.getId())) {
+                Resource resource2 = getByStandartId(standart.getId());
+                resource.setId(resource2.getId());
+            } else {
+                resource.setStandartId(standart.getId());
+                save(resource);
+            }
         }
         //standartService.save(resource.getStandart());
         //resource.setStandartId(resource.getStandart().getId());
-        save(resource);
+        //save(resource);
     }
 
     @Override
@@ -61,5 +69,10 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Resource getByStandartId(Long standartId) {
         return resourceDao.findByStandartId(standartId);
+    }
+
+    @Override
+    public List<Resource> getAllNotExclusion() {
+        return resourceDao.findAllNotExclusion();
     }
 }

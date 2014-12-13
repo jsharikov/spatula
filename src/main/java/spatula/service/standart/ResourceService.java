@@ -15,4 +15,7 @@ public interface ResourceService {
     Resource get(Long id);
 
     Resource getByStandartId(Long standartId);
+
+    List<Resource> getAllNotExclusion();
+
 }

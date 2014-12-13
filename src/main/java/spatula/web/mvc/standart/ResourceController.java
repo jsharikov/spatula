@@ -36,7 +36,7 @@ public class ResourceController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showResources(Model model) {
-        model.addAttribute("resources", resourceService.getAll());
+        model.addAttribute("resources", resourceService.getAllNotExclusion());
         return "resource/list";
     }
 
